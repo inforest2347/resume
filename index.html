@@ -3,135 +3,187 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>個人網站｜產品工程師</title>
+<title>歐瀞璞｜產品工程師</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* Layout: one narrow reading column; case studies set as ledger-like rows with a left meta rail. */
+/* Layout: grey board with white panels, like the printed résumé; yellow discs as the personal mark.
+   Each project = problem pills → three numbered pillars → outcome under each pillar. */
 :root {
-  --paper: #f4f5f2;
-  --surface: #ffffff;
-  --ink: #18212b;
-  --muted: #5b6672;
-  --line: #d9ddd6;
-  --accent: #1d6b6f;
-  --accent-soft: #e3efee;
-  --flag: #fff1b8;
-  --flag-ink: #6b5200;
-  --font-display: "Noto Serif TC", "Songti TC", Georgia, serif;
+  --board: #ececec;
+  --panel: #ffffff;
+  --well: #dcdcdc;
+  --ink: #1e1f22;
+  --muted: #5f636a;
+  --line: #cfcfcf;
+  --sun: #f7d774;
+  --sun-ink: #5a4500;
+  --ok: #2f8f57;
+  --part: #c98a12;
+  --plan: #3a73b5;
   --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #12171c; --surface: #192027; --ink: #e6eae7; --muted: #9aa5ae;
-    --line: #2b343c; --accent: #6fc2c3; --accent-soft: #1d3234;
-    --flag: #4a3d0c; --flag-ink: #ffe28a; color-scheme: dark;
+    --board: #15171a; --panel: #1f2226; --well: #2a2e33; --ink: #ecedef; --muted: #a3a8b0;
+    --line: #363b41; --sun: #e9c45a; --sun-ink: #2a2000; --ok: #5cc286; --part: #e3a83a; --plan: #78a9e6;
+    color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #12171c; --surface: #192027; --ink: #e6eae7; --muted: #9aa5ae;
-  --line: #2b343c; --accent: #6fc2c3; --accent-soft: #1d3234;
-  --flag: #4a3d0c; --flag-ink: #ffe28a; color-scheme: dark;
+  --board: #15171a; --panel: #1f2226; --well: #2a2e33; --ink: #ecedef; --muted: #a3a8b0;
+  --line: #363b41; --sun: #e9c45a; --sun-ink: #2a2000; --ok: #5cc286; --part: #e3a83a; --plan: #78a9e6;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
-body {
-  background: var(--paper); color: var(--ink);
-  font-family: var(--font-body); font-size: 16px; line-height: 1.75;
-}
-a { color: var(--accent); text-underline-offset: 3px; }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-.wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+body { background: var(--board); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+a { color: inherit; text-decoration-color: var(--sun); text-decoration-thickness: 3px; text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; position: relative; }
+.disc { position: absolute; border-radius: 50%; background: var(--sun); z-index: 0; pointer-events: none; }
 
 /* top bar */
-.bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
-.bar .mark { font-family: var(--font-mono); font-size: 13px; color: var(--muted); letter-spacing: .04em; }
-.lang { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
-.lang button { font: inherit; font-size: 13px; border: 0; background: transparent; color: var(--muted); padding: 4px 14px; cursor: pointer; }
-.lang button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.bar { position: relative; z-index: 1; display: flex; justify-content: flex-end; padding: 18px 0; }
+.lang { display: flex; background: var(--panel); border-radius: 999px; padding: 3px; }
+.lang button { font: inherit; font-size: 13px; border: 0; background: transparent; color: var(--muted); padding: 3px 14px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--board); }
 
 /* hero */
-.hero { padding: 56px 0 40px; display: grid; gap: 14px; }
-.hero h1 { font-family: var(--font-display); font-size: clamp(32px, 5vw, 44px); line-height: 1.2; margin: 0; text-wrap: balance; }
-.hero .role { font-size: 18px; font-weight: 500; color: var(--accent); margin: 0; }
-.hero .summary { max-width: 62ch; color: var(--ink); margin: 6px 0 0; font-size: 17px; }
-.contact { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 10px; font-size: 14px; color: var(--muted); }
-.contact span, .contact a { white-space: nowrap; }
+.hero { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; padding: 40px 0 28px; }
+.hero h1 { font-size: clamp(34px, 5vw, 50px); font-weight: 900; line-height: 1.15; margin: 0; text-wrap: balance; }
+.hero h1 small { font-size: .4em; font-weight: 500; color: var(--muted); margin-left: 10px; }
+.hero .role { font-size: 18px; font-weight: 700; margin: 10px 0 0; }
+.hero .role span { background: linear-gradient(transparent 60%, var(--sun) 60%); }
+.hero .tag { font-size: 20px; margin: 22px 0 0; }
+.hero .intro { color: var(--muted); margin: 12px 0 0; max-width: 46ch; }
+.contact { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 18px; font-size: 14px; }
+.facts { background: var(--panel); border-radius: 4px; padding: 20px 22px; align-self: end; display: grid; gap: 12px; font-size: 15px; }
+.facts div { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; }
+.facts dt { color: var(--muted); font-size: 13px; padding-top: 2px; }
+.facts dd { margin: 0; }
 
-section { padding: 36px 0; border-top: 1px solid var(--line); }
-h2 { font-family: var(--font-display); font-size: 24px; margin: 0 0 22px; text-wrap: balance; }
-h3 { font-size: 19px; margin: 0; line-height: 1.4; text-wrap: balance; }
+section { position: relative; z-index: 1; margin: 18px 0; }
+.panel { background: var(--panel); border-radius: 4px; padding: 26px 28px; }
+h2 { font-size: 22px; font-weight: 900; margin: 0 0 18px; text-wrap: balance; }
+h2 .en { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--muted); margin-left: 10px; letter-spacing: .08em; text-transform: uppercase; }
+h3 { font-size: 20px; margin: 0; text-wrap: balance; }
 
-/* services */
-.services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.svc { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
-.svc strong { display: block; margin-bottom: 4px; }
-.svc p { margin: 0; color: var(--muted); font-size: 15px; }
+/* about */
+.about { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.about div { border-top: 3px solid var(--sun); padding-top: 10px; }
+.about b { display: block; margin-bottom: 4px; }
+.about p { margin: 0; color: var(--muted); font-size: 15px; }
 
-/* case studies */
-.case { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 24px; padding: 26px 0; }
-.case + .case { border-top: 1px dashed var(--line); }
-.rail { font-size: 13px; color: var(--muted); display: grid; gap: 6px; align-content: start; }
-.rail .tag { font-family: var(--font-mono); font-size: 12px; color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 1px 8px; justify-self: start; }
-.case .lead { margin: 8px 0 14px; max-width: 64ch; }
-.stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 16px; padding: 0; list-style: none; }
-.stats li { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 14px; min-width: 110px; }
+/* project infographic */
+.proj { background: var(--well); border-radius: 4px; padding: 24px; }
+.proj + .proj { margin-top: 18px; }
+.proj-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
+.proj-head .meta { font-size: 13px; color: var(--muted); }
+.title-box { background: var(--panel); display: inline-block; padding: 6px 16px; border-radius: 2px; }
+.pains { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 22px 0 16px; }
+.pain { background: var(--panel); border-radius: 999px; padding: 12px 22px; font-size: 14px; text-align: center; display: flex; align-items: center; justify-content: center; min-height: 72px; }
+.pain span { text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 4px; }
+.pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.pillar { display: grid; grid-template-rows: 1fr auto auto; }
+.pillar .box { background: var(--panel); padding: 16px 18px; border-radius: 2px; }
+.pillar .hd { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; }
+.pillar .num { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--ink); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 13px; flex: none; }
+.pillar .hd small { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: .06em; }
+.tree { list-style: none; margin: 10px 0 0; padding: 0 0 0 4px; font-size: 14px; }
+.tree li { position: relative; padding-left: 18px; line-height: 1.6; }
+.tree li::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; border-left: 1px solid var(--muted); }
+.tree li::after { content: ""; position: absolute; left: 0; top: .8em; width: 12px; border-top: 1px solid var(--muted); }
+.tree li:last-child::before { bottom: calc(100% - .8em); }
+.stem { width: 1px; height: 20px; background: var(--ink); justify-self: center; }
+.result { text-align: center; font-weight: 700; font-size: 15px; line-height: 1.5; padding: 4px 6px 0; text-wrap: balance; }
+.stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 0; padding: 0; list-style: none; }
+.stats li { background: var(--panel); border-radius: 2px; padding: 8px 14px; min-width: 110px; }
 .stats b { display: block; font-family: var(--font-mono); font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.2; }
-.stats span { font-size: 13px; color: var(--muted); }
-.case ul.points { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 66ch; }
-.case ul.points b { font-weight: 700; }
-.stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-.stack span { font-family: var(--font-mono); font-size: 12px; border: 1px solid var(--line); border-radius: 4px; padding: 1px 8px; color: var(--muted); }
-blockquote { margin: 18px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--surface); max-width: 64ch; }
+.stats span { font-size: 12px; color: var(--muted); }
+.stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.stack span { font-family: var(--font-mono); font-size: 12px; background: var(--panel); border-radius: 2px; padding: 1px 8px; color: var(--muted); }
+details { margin-top: 16px; background: var(--panel); border-radius: 2px; padding: 10px 16px; font-size: 15px; }
+summary { cursor: pointer; font-weight: 700; }
+details ul { margin: 10px 0 4px; padding-left: 1.2em; display: grid; gap: 4px; }
+blockquote { margin: 16px 0 0; padding: 12px 16px; border-left: 4px solid var(--sun); background: var(--panel); }
 blockquote footer { font-size: 13px; color: var(--muted); margin-top: 6px; }
 
-/* skills */
-.skills { display: grid; gap: 14px; margin: 0; }
-.skills > div { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; }
-.skills dt { font-weight: 700; }
-.skills dd { margin: 0; color: var(--muted); }
+/* screenshots */
+.shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.shots figure { margin: 0; }
+.shots figure.wide { grid-column: 1 / -1; }
+.shots img { width: 100%; height: auto; display: block; border-radius: 4px; background: var(--well); }
+.shots figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.fine { font-size: 12px; color: var(--muted); margin: 12px 0 0; }
 
-/* experience */
-.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-.timeline li { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 24px; }
+/* capabilities */
+.cap-sum { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; margin: -6px 0 18px; }
+.cap-sum span { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+.dot.done { background: var(--ok); }
+.dot.partial { background: var(--part); }
+.dot.plan { background: transparent; border: 2px solid var(--plan); }
+.dot.no { background: transparent; border: 1.5px dashed var(--muted); }
+.cap-group + .cap-group { margin-top: 20px; }
+.cap-group h4 { font-size: 13px; color: var(--muted); font-weight: 500; margin: 0 0 8px; letter-spacing: .04em; }
+.caps { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+.cap { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; }
+.cap .dot { margin-top: 7px; }
+.cap b { font-size: 15px; display: block; line-height: 1.4; }
+.cap span { font-size: 12.5px; color: var(--muted); line-height: 1.5; display: block; margin-top: 2px; }
+.cap.no { opacity: .55; }
+.extras { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; padding: 0; list-style: none; }
+.extras li { background: var(--sun); color: var(--sun-ink); border-radius: 999px; padding: 4px 12px; font-size: 13.5px; }
+
+/* skills */
+.skills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.skill { background: var(--well); border-radius: 4px; padding: 16px; }
+.skill .hd { background: var(--panel); padding: 8px 12px; margin-bottom: 10px; border-radius: 2px; }
+.skill .hd b { display: block; font-size: 16px; }
+.skill .hd span { font-size: 12px; color: var(--muted); }
+
+/* timeline */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.timeline li { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.timeline li:last-child { border-bottom: 0; padding-bottom: 0; }
 .timeline .when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 2px; }
 .timeline .what b { display: block; }
 .timeline .what span { color: var(--muted); font-size: 15px; }
 
-/* screenshots */
-.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
-.shots figure { margin: 0; }
-.shots img { max-width: 100%; border: 1px solid var(--line); border-radius: 8px; display: block; }
-.shots figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+footer.site { position: relative; z-index: 1; padding: 24px 0 56px; font-size: 14px; color: var(--muted); }
 
-footer.site { padding: 36px 0 56px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
-
-/* missing-field markers */
-mark.todo { background: var(--flag); color: var(--flag-ink); border-radius: 3px; padding: 0 4px; font-size: .92em; }
-.todo-panel { margin: 0 0 28px; background: var(--flag); color: var(--flag-ink); border-radius: 10px; padding: 14px 18px; font-size: 14px; }
+mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; padding: 0 5px; font-size: .9em; outline: 1px dashed var(--sun-ink); outline-offset: -1px; }
+.todo-panel { position: relative; z-index: 1; background: var(--panel); border: 2px dashed var(--part); border-radius: 4px; padding: 14px 18px; font-size: 14px; margin-bottom: 10px; }
 .todo-panel strong { display: block; margin-bottom: 6px; }
-.todo-panel ol { margin: 0; padding-left: 1.4em; columns: 2; column-gap: 28px; }
-.todo-panel code { font-family: var(--font-mono); font-size: 12px; opacity: .8; }
+.todo-panel ol { margin: 0; padding-left: 1.4em; columns: 3; column-gap: 24px; }
+.todo-panel code { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
 
-@media (max-width: 640px) {
-  .services { grid-template-columns: 1fr; }
-  .case, .timeline li, .skills > div { grid-template-columns: 1fr; gap: 8px; }
-  .rail { grid-auto-flow: row; }
+@media (max-width: 860px) {
+  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .todo-panel ol { columns: 2; }
+}
+@media (max-width: 680px) {
+  .hero, .about, .pains, .pillars, .shots { grid-template-columns: 1fr; }
+  .skills { grid-template-columns: 1fr; }
+  .pain { border-radius: 14px; min-height: 0; }
+  .timeline li { grid-template-columns: 1fr; gap: 2px; }
+  .panel, .proj { padding: 18px; }
   .todo-panel ol { columns: 1; }
 }
-@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <span class="disc" style="width:260px;height:260px;left:-130px;top:-110px"></span>
+  <span class="disc" style="width:200px;height:200px;right:-60px;top:280px"></span>
   <header class="bar">
-    <span class="mark" id="mark"></span>
     <div class="lang" role="group" aria-label="Language">
-      <button type="button" id="btn-zh" data-lang="zh">中文</button>
-      <button type="button" id="btn-en" data-lang="en">English</button>
+      <button type="button" id="btn-zh">中文</button>
+      <button type="button" id="btn-en">English</button>
     </div>
   </header>
   <main id="app"></main>
@@ -146,203 +198,250 @@ mark.todo { background: var(--flag); color: var(--flag-ink); border-radius: 3px;
   var missing = [];
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-  function get(path) {
-    var v = path.split(".").reduce(function (o, k) { return o == null ? undefined : o[k]; }, C);
-    if (v && typeof v === "object" && !Array.isArray(v) && ("zh" in v || "en" in v)) v = v[lang];
-    return v == null ? "" : String(v).trim();
-  }
+  function pick(x) { if (x && typeof x === "object" && !Array.isArray(x) && ("zh" in x || "en" in x)) x = x[lang]; return x == null ? "" : String(x).trim(); }
+  function get(path) { return pick(path.split(".").reduce(function (o, k) { return o == null ? undefined : o[k]; }, C)); }
   function note(path, label) { if (!missing.some(function (m) { return m.path === path; })) missing.push({ path: path, label: label }); }
-  // value with optional fallback; when empty: marked in preview mode, else fallback or ""
+  function todo(label) { return '<mark class="todo">' + esc(label) + "</mark>"; }
+  // value, or (preview) a yellow marker, or (live) fallback / nothing
   function v(path, label, fallback, pre, post) {
     pre = pre || ""; post = post || "";
     var x = get(path);
     if (x) return pre + esc(x) + post;
     note(path, label);
-    if (SHOW) return pre + '<mark class="todo">' + esc(label) + "</mark>" + post;
+    if (SHOW) return pre + todo(label) + post;
     return fallback ? pre + esc(fallback) + post : "";
   }
   function T(zh, en) { return lang === "en" ? en : zh; }
+  function list(a, cls) { return "<ul" + (cls ? ' class="' + cls + '"' : "") + ">" + a.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>"; }
+
+  /* ---------- project infographic ---------- */
+  function project(p) {
+    return '<article class="proj">' +
+      '<div class="proj-head"><div class="title-box"><h3>' + p.title + '</h3></div><span class="meta">' + p.meta + "</span></div>" +
+      '<div class="pains">' + p.pains.map(function (x) { return '<div class="pain"><span>' + x + "</span></div>"; }).join("") + "</div>" +
+      '<div class="pillars">' + p.pillars.map(function (q, i) {
+        return '<div class="pillar"><div class="box"><div class="hd"><span class="num">' + (i + 1) + "</span>" + q.t + " <small>" + q.en + "</small></div>" +
+          list(q.items, "tree") + '</div><span class="stem"></span><div class="result">' + q.r + "</div></div>";
+      }).join("") + "</div>" +
+      (p.stats ? '<ul class="stats">' + p.stats.map(function (s) { return "<li><b>" + s[0] + "</b><span>" + s[1] + "</span></li>"; }).join("") + "</ul>" : "") +
+      '<div class="stack">' + p.stack.map(function (s) { return "<span>" + s + "</span>"; }).join("") + "</div>" +
+      "<details><summary>" + T("詳細內容", "Details") + "</summary>" + list(p.details) + "</details>" +
+      (p.extra || "") + "</article>";
+  }
 
   function render() {
     missing = [];
     document.documentElement.lang = lang === "en" ? "en" : "zh-Hant";
-    document.getElementById("btn-zh").setAttribute("aria-pressed", lang === "zh");
-    document.getElementById("btn-en").setAttribute("aria-pressed", lang === "en");
+    document.getElementById("btn-zh").setAttribute("aria-pressed", String(lang === "zh"));
+    document.getElementById("btn-en").setAttribute("aria-pressed", String(lang === "en"));
 
     var name = get("person.name");
     if (!name) note("person.name", T("姓名", "Name"));
-    var nameHtml = name ? esc(name) : (SHOW ? '<mark class="todo">' + T("姓名", "Your name") + "</mark>" : T("產品工程師", "Product Engineer"));
-    document.getElementById("mark").textContent = name || "portfolio";
-    document.title = (name ? name + T("｜", " | ") : "") + T("產品工程師", "Product Engineer");
+    var nick = get("person.nickname");
+    document.title = (name || "") + T("｜產品工程師", " | Product Engineer");
 
-    var email = get("person.email"), phone = get("person.phone");
-    var links = [];
+    /* contact */
+    var email = get("person.email"), phone = get("person.phone"), links = [];
     links.push("<span>" + esc(get("person.location")) + "</span>");
     if (email) links.push('<a href="mailto:' + esc(email) + '">' + esc(email) + "</a>");
-    else { note("person.email", "Email"); if (SHOW) links.push('<mark class="todo">Email</mark>'); }
+    else { note("person.email", "Email"); if (SHOW) links.push(todo("Email")); }
     if (lang === "zh") {
       if (phone) links.push("<span>" + esc(phone) + "</span>");
-      else { note("person.phone", "電話（可留空）"); if (SHOW) links.push('<mark class="todo">電話（可留空）</mark>'); }
+      else { note("person.phone", "電話（可留空）"); if (SHOW) links.push(todo("電話（可留空）")); }
     }
     [["person.github", "GitHub"], ["person.portfolio", T("作品集", "Portfolio")], ["person.linkedin", "LinkedIn"]].forEach(function (p) {
       var u = get(p[0]);
       if (u) links.push('<a href="' + esc(u) + '">' + p[1] + "</a>");
-      else if (!(lang === "zh" && p[0] === "person.linkedin")) { note(p[0], p[1]); if (SHOW) links.push('<mark class="todo">' + p[1] + "</mark>"); }
+      else if (!(lang === "zh" && p[0] === "person.linkedin")) { note(p[0], p[1] + T("（可留空）", " (optional)")); if (SHOW) links.push(todo(p[1])); }
     });
+
+    var langs = (C.languages || []).map(pick).filter(Boolean);
+    var school = v("education.school", T("學校名稱", "University"));
+    var firmName = v("firm.name", T("事務所名稱（可不公開）", "Firm name (optional)"), T("智財法律事務所", "IP law firm"));
+    var client = v("pickleball.clientName", T("客戶名稱（需業主同意）", "Client name (needs consent)"), T("匹克球教學與球敘新創", "a pickleball coaching startup"));
+    var years = get("person.years");
 
     var html = "";
 
-    // ---------- hero ----------
-    html += '<section class="hero" style="border-top:0">' +
-      "<h1>" + nameHtml + "</h1>" +
-      '<p class="role">' + T("軟體產品工程師｜營運系統與流程自動化", "Product Engineer | Operations Systems &amp; Workflow Automation") + "</p>" +
-      '<p class="summary">' + T(
-        "從需求訪談、資料模型、開發到上線維運，一個人負責整套營運系統。擅長把分散在 LINE 群組、試算表和人工對帳裡的流程，做成不同角色每天都用得上的產品。",
-        "I turn messy operations into working software. I handle the whole job alone: scoping with the owner, data model, build, launch and support. Most of my work replaces group chats, spreadsheets and manual reconciliation with tools each role uses every day.") + "</p>" +
-      '<div class="contact">' + links.join("") + "</div></section>";
+    /* ---------- hero ---------- */
+    html += '<section class="hero"><div>' +
+      "<h1>" + (name ? esc(name) : (SHOW ? todo(T("姓名", "Your name")) : "")) + (nick && lang === "zh" ? "<small>（" + esc(nick) + "）</small>" : "") + "</h1>" +
+      '<p class="role"><span>' + T("產品工程師｜營運系統與流程自動化", "Product Engineer | Operations Systems &amp; Workflow Automation") + "</span></p>" +
+      '<p class="tag">「' + esc(get("person.tagline")) + "」</p>" +
+      '<p class="intro">' + T(
+        "喜歡挑戰、熱愛嘗試新事物。不僵化思考，總有更好的解決方案；不流於習慣，持續優化現有的工作流程。",
+        "I like a challenge and new tools. There is usually a better way, so I keep reworking the processes people have stopped questioning.") + "</p>" +
+      '<div class="contact">' + links.join("") + "</div></div>" +
+      '<dl class="facts">' +
+        "<div><dt>" + T("經驗", "Experience") + "</dt><dd>" + (years ? T(esc(years) + " 年工作經驗，多數時間遠端", esc(years) + " years of work, mostly remote") : "") + "</dd></div>" +
+        "<div><dt>" + T("現職", "Now") + "</dt><dd>" + firmName + T("・", ", ") + esc(get("firm.title")) + "<br>" + T("獨立接案・產品工程師", "Freelance product engineer") + "</dd></div>" +
+        "<div><dt>" + T("學歷", "Education") + "</dt><dd>" + school + "</dd></div>" +
+        "<div><dt>" + T("語言", "Languages") + "</dt><dd>" + langs.map(esc).join("<br>") + "</dd></div>" +
+      "</dl></section>";
 
-    // ---------- services ----------
-    var svcs = lang === "en" ? [
-      ["Replace manual operations with one system", "Sign-ups, payments, scheduling, staff payouts and reporting in one place instead of chats and spreadsheets."],
-      ["Own the product, not only the code", "I interview the people doing the work, write the requirements, propose scope and price, then build and support it."],
-      ["Ship fast on low-cost infrastructure", "Google Workspace, Apps Script, AppSheet and messaging-app front ends keep running costs low for small teams."],
-      ["Keep it stable after launch", "Automated tests, one-click deploys with rollback, health checks and a written manual for each role."]
+    /* ---------- about ---------- */
+    var about = lang === "en" ? [
+      ["Front-line background", "Bilingual customer service, retail and sales support in Japanese and English. Years of cross-team admin work help me spot process pain points that pure engineers miss."],
+      ["At home in Google tools", "Spreadsheets as the database, AppSheet for front and back end, Apps Script written with AI for what low-code can't do."],
+      ["Works with AI daily", "Mostly Claude. I have built my own MCP server and a text RPG game with it."]
     ] : [
-      ["把人工流程收進一套系統", "報名、收款、排課、人員費用與報表集中管理，取代群組訊息和多份試算表。"],
-      ["對產品負責，不只寫程式", "直接訪談第一線人員、撰寫需求、提出範圍與報價，再開發、上線與維運。"],
-      ["低成本、快速交付", "以 Google Workspace、Apps Script、AppSheet 和 LINE 前端，讓小團隊的營運成本維持在低檔。"],
-      ["上線後依然穩定", "自動化測試、一鍵部署與失敗還原、健康檢查，以及每個角色的操作手冊。"]
+      ["第一線出身", "做過日英文客服、門市與業務助理，多年跨部門溝通與行政經驗，讓我比純技術人員更容易抓到流程痛點。"],
+      ["熟悉 Google 生態", "以 Spreadsheets 當資料庫、AppSheet 搭建前後端，並用 Vibe coding 撰寫 GAS 補足功能。"],
+      ["日常與 AI 協作", "主要使用 Claude，撰寫過符合自己需求的 MCP，也做過文字 RPG 遊戲。"]
     ];
-    html += "<section><h2>" + T("我能做什麼", "What I do for clients") + '</h2><div class="services">' +
-      svcs.map(function (s) { return '<div class="svc"><strong>' + s[0] + "</strong><p>" + s[1] + "</p></div>"; }).join("") + "</div></section>";
+    html += '<section class="panel"><h2>' + T("關於我", "About") + '<span class="en">about</span></h2><div class="about">' +
+      about.map(function (a) { return "<div><b>" + a[0] + "</b><p>" + a[1] + "</p></div>"; }).join("") + "</div></section>";
 
-    // ---------- projects ----------
-    var client = v("pickleball.clientName", T("客戶名稱（需業主同意）", "Client name (needs consent)"), T("匹克球教學與球敘新創", "a pickleball coaching startup"));
-    var pbStats = [
-      ["35", T("11 月專項課", "clinics in Nov")],
-      ["64", T("11 月球敘場次", "open-play sessions in Nov")],
-      ["102", T("自動化測試檔", "automated test files")],
-      ["5", T("程式專案", "codebases")]
-    ];
+    /* ---------- projects ---------- */
     var stu = get("pickleball.students"), sig = get("pickleball.signups");
-    if (stu) pbStats.unshift([esc(stu), T("系統內學員", "students in the system")]); else note("pickleball.students", T("匹克球學員數", "Pickleball student count"));
-    if (sig) pbStats.splice(1, 0, [esc(sig), T("每月報名筆數", "sign-ups a month")]); else note("pickleball.signups", T("匹克球每月報名筆數", "Pickleball monthly sign-ups"));
-    if (SHOW && !stu) pbStats.unshift(['<mark class="todo">?</mark>', T("系統內學員", "students in the system")]);
-    if (SHOW && !sig) pbStats.splice(1, 0, ['<mark class="todo">?</mark>', T("每月報名筆數", "sign-ups a month")]);
+    if (!stu) note("pickleball.students", T("匹克球學員數", "Pickleball student count"));
+    if (!sig) note("pickleball.signups", T("匹克球每月報名筆數", "Pickleball monthly sign-ups"));
+    var pbStats = [];
+    if (stu || SHOW) pbStats.push([stu ? esc(stu) : todo("?"), T("系統內學員", "students")]);
+    if (sig || SHOW) pbStats.push([sig ? esc(sig) : todo("?"), get("pickleball.signupsLabel") || T("每月報名筆數", "sign-ups a month")]);
+    pbStats.push(["3", T("LINE 官方帳號", "LINE official accounts")], ["99", T("11 月課程與球敘場次", "classes and sessions in Nov")], ["102", T("自動化測試檔", "automated test files")]);
 
-    var reconcile = v("pickleball.reconcile", T("對帳時間的改善", "Reconciliation time saved"));
-    var pbPoints = lang === "en" ? [
-      "<b>Scope:</b> three LINE messaging-app portals (students, venue hosts, coaches), an internal operations web app and a scheduled back-office service.",
-      "<b>Flows:</b> sign-up, waitlist promotion, payment reporting and reconciliation, check-in, scheduling, minimum-headcount decisions, credits, host and coach payouts.",
-      "<b>Product work:</b> wrote the requirements spec, data model, phased hourly quote and running-cost estimate. Out-of-scope requests get an hour estimate and client approval first.",
-      "<b>Rules:</b> turned the owner's verbal rules (payment deadlines, refund terms, tiered host fees, venue revenue share) into configurable settings, and chose which steps run automatically and which stop for a person.",
-      "<b>Data:</b> migrated a full month of historical records and reconciled them before launch.",
-      "<b>Release:</b> a one-click deploy tool that backs up, uploads, verifies and rolls back on failure, plus cross-codebase rule checks.",
-      "<b>Speed:</b> logged slow requests to find the bottleneck, then cut sign-up page load time with snapshot caching and batched writes."
-    ] : [
-      "<b>產品範圍：</b>學員、場主、教練三個 LINE 官方帳號（LIFF 網頁），加上內部營運網頁與管理排程。",
-      "<b>涵蓋流程：</b>報名、候補遞補、付款回報與對帳、簽到、排課、成班判斷、抵用金、場主與教練費用結算。",
-      "<b>需求與範圍：</b>撰寫需求說明書、資料模組規劃、分階段時薪制報價與營運成本評估；範圍外需求先估工時，業主核可後才做。",
-      "<b>規則落地：</b>把業主的口頭規則（付款期限、成班門檻、取消退費、場主費級距、場地分潤）轉成可設定的系統規則，並區分哪些節點自動執行、哪些停下來由人判斷。",
-      "<b>資料：</b>設計分為六個檔案的 Google Sheets 資料庫，遷移上線前整個月的歷史資料並完成對帳。",
-      "<b>品質與發版：</b>一鍵部署工具包辦備份、上傳、驗證，失敗時自動還原；另有跨專案規則一致性檢查。",
-      "<b>效能：</b>先記錄慢請求找出瓶頸，再以快照快取與批次寫入改善報名頁開啟速度。"
-    ];
-    if (get("pickleball.reconcile")) pbPoints.splice(5, 0, "<b>" + T("成果：", "Result: ") + "</b>" + reconcile + T("。", "."));
-    else if (SHOW) pbPoints.splice(5, 0, "<b>" + T("成果：", "Result: ") + "</b>" + reconcile);
-
+    var rec = get("pickleball.reconcile");
+    if (!rec) note("pickleball.reconcile", T("對帳時間的改善", "Reconciliation time saved"));
     var quote = get("pickleball.testimonial." + lang);
     if (!quote) note("pickleball.testimonial", T("業主推薦語（可留空）", "Client testimonial (optional)"));
     var quoteHtml = quote ? "<blockquote>" + esc(quote) + "<footer>" + esc(get("pickleball.testimonial.author")) + "</footer></blockquote>"
-      : (SHOW ? '<blockquote><mark class="todo">' + T("業主推薦語（可留空）", "Client testimonial (optional)") + "</mark></blockquote>" : "");
+      : (SHOW ? "<blockquote>" + todo(T("業主推薦語（可留空）", "Client testimonial (optional)")) + "</blockquote>" : "");
 
-    var firmName = v("firm.name", T("事務所名稱（可不公開）", "Firm name (optional)"), T("某智慧財產權事務所", "an IP law firm in Taipei"));
-    var firmPoints = lang === "en" ? [
-      "<b>Patent annuity notices:</b> automated the notice flow, with a client page behind a private link where clients confirm or abandon each case. Answers write back to the case records, replacing " + v("firm.beforeNotice", "previous method") + ".",
-      "<b>Billing and invoicing:</b> batch invoice generation, client billing statements and reconciliation documents for foreign agents" + v("firm.volume", "monthly volume", "", ", handling ", " a month") + ".",
-      "<b>Payment reconciliation:</b> redesigned around an intermediate ledger table to remove race conditions between automations.",
-      "<b>Client workflows:</b> a client KYC form flow and a tool that maps scanned files to cases.",
-      "<b>Impact:</b> " + v("firm.saved", "time saved or errors reduced", "domain rules for IP procedures, tax and foreign exchange reporting are built into the system, so staff decide less by hand") + "."
-    ] : [
-      "<b>專利年費通知：</b>設計模組化的通知流程，並做出客戶專屬連結的網頁，客戶可在線上回覆委辦或放棄，結果自動回寫案件主檔，取代" + v("firm.beforeNotice", "原本的做法") + "。",
-      "<b>請款與發票：</b>建立批次開立發票的流程，自動產生客戶請款單與國外代理人對帳文件" + v("firm.volume", "每月處理量", "", "，每月處理", "") + "。",
-      "<b>收款銷帳：</b>以中介明細表重新設計銷帳架構，解決多個自動化同時寫入造成的資料錯亂。",
-      "<b>客戶端流程：</b>開發客戶 KYC 表單流程；做出檔案索引上傳工具，把掃描影像對應到案件。",
-      "<b>成效：</b>" + v("firm.saved", "省下的工時或減少的錯誤", "把智財案件程序、稅務與外匯申報規則寫進系統，減少人工判斷") + "。"
-    ];
+    var pb = {
+      title: T("營運管理系統｜", "Operations platform for ") + client,
+      meta: T("獨立接案・2026 年 10 月 – 現在・唯一工程師", "Freelance · Oct 2026 – present · sole engineer"),
+      pains: lang === "en"
+        ? ["Sign-ups scattered across a third-party app and social groups", "Payments, cash on site and reconciliation tracked by hand", "Rules lived in conversations; each role's info sat in a different chat"]
+        : ["報名分散在第三方 App 與社群，名單要人工整理", "付款、現場收款與對帳都靠人工追蹤", "規則多是口頭約定，各角色資訊分散在不同群組"],
+      pillars: lang === "en" ? [
+        { t: "Plan", en: "PLANNING", items: ["Requirements spec", "Data model across 6 files", "Phased hourly quote", "Hours estimated before extras"], r: "Clear scope; every change has a basis" },
+        { t: "Platform", en: "PLATFORM", items: ["Student, host and coach LINE accounts", "Internal operations web app", "Scheduled jobs and notices"], r: "Each role does its job in its own screen" },
+        { t: "Operate", en: "OPERATIONS", items: ["102 automated test files", "One-click deploy with rollback", "Health checks and speed logs"], r: "Fast releases that can be undone" }
+      ] : [
+        { t: "規劃", en: "PLANNING", items: ["需求說明書", "資料模組（6 個檔案）", "分階段時薪制報價", "範圍外需求先估工時"], r: "範圍清楚，變更有依據" },
+        { t: "平台", en: "PLATFORM", items: ["學員／場主／教練 LINE 官方帳號", "內部營運網頁", "管理排程與自動通知"], r: "每個角色在自己的介面完成工作" },
+        { t: "維運", en: "OPERATIONS", items: ["102 個自動化測試檔", "一鍵部署與失敗還原", "健康檢查與效能紀錄"], r: "改版快，出錯可還原" }
+      ],
+      stats: pbStats,
+      stack: ["JavaScript", "Google Apps Script", "LINE Messaging API", "LIFF", "Google Sheets API", "GitHub Pages", "clasp"],
+      details: (lang === "en" ? [
+        "Flows: sign-up, waitlist promotion, payment reporting and reconciliation, check-in, scheduling, minimum-headcount decisions, credits, host and coach payouts.",
+        "Turned the owner's verbal rules (payment deadlines, refund terms, tiered host fees, venue revenue share) into settings, and chose which steps run automatically and which stop for a person.",
+        "Migrated a full month of historical records and reconciled them before launch.",
+        "Logged slow requests to find the bottleneck, then cut sign-up page load time with snapshot caching and batched writes."
+      ] : [
+        "涵蓋流程：報名、候補遞補、付款回報與對帳、簽到、排課、成班判斷、抵用金、場主與教練費用結算。",
+        "把業主的口頭規則（付款期限、成班門檻、取消退費、場主費級距、場地分潤）轉成可設定的規則，並區分哪些節點自動執行、哪些停下來由人判斷。",
+        "上線前遷移整個月的歷史資料並完成對帳。",
+        "先記錄慢請求找出瓶頸，再以快照快取與批次寫入改善報名頁開啟速度。"
+      ]).concat(rec ? [T("成果：", "Result: ") + esc(rec)] : (SHOW ? [T("成果：", "Result: ") + todo(T("對帳時間的改善", "Reconciliation time saved"))] : [])),
+      extra: quoteHtml
+    };
 
-    html += "<section><h2>" + T("專案經歷", "Selected projects") + "</h2>" +
-      '<article class="case"><div class="rail"><span class="tag">' + T("獨立接案", "Freelance") + "</span><span>" + T("2026 年 10 月 – 現在", "Oct 2026 – present") + "</span><span>" + T("唯一工程師", "Sole engineer") + "</span></div><div>" +
-        "<h3>" + T("營運管理系統｜", "Operations platform for ") + client + "</h3>" +
-        '<p class="lead">' + v("pickleball.before", T("背景描述", "Background")) + T("", " ") + T(
-          "10 月初拿到需求，11 月起報名改走自有平台。",
-          "Requirements arrived in early October; from November sign-ups moved to the client's own platform.") + "</p>" +
-        '<ul class="stats">' + pbStats.map(function (s) { return "<li><b>" + s[0] + "</b><span>" + s[1] + "</span></li>"; }).join("") + "</ul>" +
-        '<ul class="points">' + pbPoints.map(function (p) { return "<li>" + p + "</li>"; }).join("") + "</ul>" +
-        '<div class="stack"><span>JavaScript</span><span>Google Apps Script</span><span>LINE Messaging API</span><span>LIFF</span><span>Google Sheets API</span><span>GitHub Pages</span><span>clasp</span></div>' +
-        quoteHtml +
-      "</div></article>" +
-      '<article class="case"><div class="rail"><span class="tag">' + T("在職", "In-house") + "</span><span>" + v("firm.start", T("到職年月", "Start date")) + T(" – 現在", " – present") + "</span><span>" + T("唯一開發者", "Sole developer") + "</span></div><div>" +
-        "<h3>" + T("事務所內部 ERP｜", "ERP for ") + firmName + "</h3>" +
-        '<p class="lead">' + v("firm.before", T("背景描述", "Background")) + T("", " ") + T(
-          "我獨立規劃、開發並維運他們現在每天使用的 ERP" + v("firm.users", "使用人數", "", "，共 ", " 人使用") + "。",
-          "I designed and run the internal ERP they now work in" + v("firm.users", "user count", "", ", used daily by ", " staff") + ".") + "</p>" +
-        '<ul class="points">' + firmPoints.map(function (p) { return "<li>" + p + "</li>"; }).join("") + "</ul>" +
-        '<div class="stack"><span>AppSheet</span><span>Google Apps Script</span><span>Webhooks</span><span>Google Workspace</span></div>' +
-      "</div></article></section>";
+    var users = get("firm.users"), saved = get("firm.saved");
+    if (!users) note("firm.users", T("事務所系統使用人數", "Firm system users"));
+    if (!saved) note("firm.saved", T("文書流程優化的成效", "Document workflow result"));
+    var firm = {
+      title: T("社內文書流程優化｜", "Document workflow overhaul, ") + firmName,
+      meta: v("firm.start", T("到職年月", "Start date"), "", "", T(" – 現在", " – present")) + T("・唯一開發者", " · sole developer"),
+      pains: lang === "en"
+        ? ["A database 10+ years old, full of redundant data and structures, like a warehouse of scrap", "Data cut off from how work was really done: heavy rework, low efficiency, more errors", "Requirements lived in colleagues' heads, so I had to check them one by one"]
+        : ["十多年的資料庫，有許多冗餘的資料與結構，就像一個大型的廢棄倉庫", "資料封閉且與實際作業斷軌，大量重工造成效率低落、錯誤率提高", "需求散落在各部門的經驗裡，只能不斷與前輩溝通確認"],
+      pillars: lang === "en" ? [
+        { t: "Source", en: "DATABASE", items: ["Field planning", "Relations between tables", "Legacy data migration"], r: "Clean, easy to maintain and extend" },
+        { t: "Platform", en: "PLATFORM", items: ["AppSheet front and back end", "Built-in tools + Apps Script automation", "Modular design: space traded for speed"], r: "Short build time, built on Google tools that are easy to extend" },
+        { t: "Communication", en: "COMMUNICATION", items: ["Understand the pain points", "Verify requirements", "Refine features"], r: "Fix the core pain, keep the vision aligned and flexible" }
+      ] : [
+        { t: "源頭", en: "DATABASE", items: ["資料欄位規劃", "表單間關聯性", "進行資料移轉"], r: "整潔、方便維護擴充" },
+        { t: "平台", en: "PLATFORM", items: ["AppSheet 前後端", "內建功能＋GAS 自動化", "多個模組，用空間換取時間"], r: "開發時程短、前後端可同時管理開發，結合 Google 內功能擴充性高" },
+        { t: "溝通", en: "COMMUNICATION", items: ["了解痛點", "核對需求", "優化功能"], r: "確認核心痛點，對齊想像並保持彈性" }
+      ],
+      stats: (users || SHOW ? [[users ? esc(users) : todo("?"), T("每天使用人數", "daily users")]] : []).concat([["10+", T("年舊資料整併", "years of legacy data")]]),
+      stack: ["AppSheet", "Google Apps Script", "Webhooks", "Google Workspace"],
+      details: (lang === "en" ? [
+        "Patent annuity notices: clients get a private link, confirm or abandon each case online, and answers write back to the case records.",
+        "Billing statements and foreign-agent reconciliation documents generated automatically.",
+        "Invoice issuing files produced in batches.",
+        "Payment matching redesigned around an intermediate table so automations no longer overwrite each other.",
+        "Client KYC form workflow, and a tool that maps scanned files to cases."
+      ] : [
+        "專利年費通知：客戶透過專屬連結在線上回覆委辦或放棄，結果自動回寫案件主檔。",
+        "客戶請款單與國外代理人對帳文件自動產生。",
+        "發票開立檔批次產生。",
+        "以中介明細表重新設計收款銷帳，避免多個自動化同時寫入造成資料錯亂。",
+        "客戶 KYC 表單流程；檔案索引上傳工具，把掃描影像對應到案件。"
+      ]).concat(saved ? [T("成效：", "Result: ") + esc(saved)] : (SHOW ? [T("成效：", "Result: ") + todo(T("文書流程優化的成效", "Document workflow result"))] : []))
+    };
 
-    // ---------- screenshots ----------
+    html += '<section class="panel"><h2>' + T("專案經歷", "Projects") + '<span class="en">projects</span></h2>' + project(firm) + project(pb) + "</section>";
+
+    /* ---------- screenshots ---------- */
     var shots = (C.screenshots || []).filter(function (s) { return s && s.src; });
     if (shots.length) {
-      html += "<section><h2>" + T("系統畫面", "Screens") + '</h2><div class="shots">' + shots.map(function (s) {
-        var cap = s.caption ? (typeof s.caption === "object" ? s.caption[lang] : s.caption) : "";
-        return '<figure><img src="' + esc(s.src) + '" alt="' + esc(cap || "") + '" loading="lazy"><figcaption>' + esc(cap || "") + "</figcaption></figure>";
-      }).join("") + "</div></section>";
-    } else note("screenshots", T("系統截圖（可留空）", "Screenshots (optional)"));
-
-    // ---------- skills ----------
-    var skills = lang === "en" ? [
-      ["Product", "Requirements interviews, process design, data modelling, roles and permissions, scoping and quoting, user manuals and training"],
-      ["Technical", "JavaScript, Google Apps Script, AppSheet, LINE Messaging API and LIFF, Google Sheets API, webhooks, GitHub Pages, clasp, automated testing, deploy tooling, AI-assisted development"],
-      ["Domain", "Booking and scheduling, payment reconciliation, revenue share and staff payouts, invoicing, patent and trademark case workflows"]
-    ] : [
-      ["產品", "需求訪談、流程設計、資料建模、角色與權限規劃、分階段報價與範圍管理、操作手冊與教育訓練"],
-      ["技術", "JavaScript、Google Apps Script、AppSheet、LINE Messaging API 與 LIFF、Google Sheets API、Webhook 串接、GitHub Pages、clasp、自動化測試與一鍵部署"],
-      ["領域", "專利與商標案件流程、請款與發票、台灣稅務與外匯申報、收款對帳、分潤與人員費用結算"],
-      ["工作方式", "遠端獨立作業；以 AI 輔助開發加快交付，規則與驗收由自己把關"]
-    ];
-    html += "<section><h2>" + T("能力", "Skills") + '</h2><dl class="skills">' +
-      skills.map(function (s) { return "<div><dt>" + s[0] + "</dt><dd>" + s[1] + "</dd></div>"; }).join("") + "</dl></section>";
-
-    // ---------- experience & education ----------
-    var school = v("education.school", T("學校名稱", "University"));
-    var year = v("education.year", T("畢業年份", "Year"));
-    var eng = v("education.english", T("英文程度", "English level"));
-    var tl = [
-      [T("2026.10 – 現在", "Oct 2026 – now"), T("獨立接案・產品工程師", "Freelance Product Engineer"), T("遠端", "Remote")],
-      [v("firm.start", T("到職年月", "Start date")) + T(" – 現在", " – now"), T("ERP 開發工程師", "ERP Developer"), firmName + T("・多數時間遠端", " · mostly remote")],
-      [year, T("中國文學系 學士", "B.A. in Chinese Literature"), school + T("。文科背景自學進入系統開發，習慣先把規則寫清楚再動手，能用非技術人員聽得懂的話解釋系統。", ". Self-taught in software; I write the rules down clearly before I build, and explain systems in plain language to non-technical owners.")],
-      [T("語言", "Languages"), T("中文（母語）", "Mandarin (native)"), T("英文：", "English: ") + eng]
-    ];
-    html += "<section><h2>" + T("經歷與學歷", "Experience and education") + '</h2><ul class="timeline">' +
-      tl.map(function (r) { return '<li><div class="when">' + r[0] + '</div><div class="what"><b>' + r[1] + "</b><span>" + r[2] + "</span></div></li>"; }).join("") + "</ul></section>";
-
-    // ---------- footer / contact ----------
-    html += '<footer class="site">' + T("合作洽詢：", "Get in touch: ") + (email ? '<a href="mailto:' + esc(email) + '">' + esc(email) + "</a>" : (SHOW ? '<mark class="todo">Email</mark>' : "")) + "</footer>";
-
-    // ---------- missing panel (preview only) ----------
-    if (SHOW && missing.length) {
-      html = '<div class="todo-panel" style="margin-top:28px"><strong>' + T("待填清單（共 " + missing.length + " 項）— 在 config.js 填好後把 showMissing 改成 false 即可隱藏", missing.length + " fields left to fill in config.js — set showMissing to false to hide this panel") + "</strong><ol>" +
-        missing.map(function (m) { return "<li>" + esc(m.label) + " <code>" + esc(m.path) + "</code></li>"; }).join("") + "</ol></div>" + html;
+      html += '<section class="panel"><h2>' + T("系統畫面", "Screens") + '<span class="en">screens</span></h2><div class="shots">' + shots.map(function (s) {
+        var cap = pick(s.caption);
+        return '<figure' + (s.wide ? ' class="wide"' : "") + '><img src="' + esc(s.src) + '" alt="' + esc(cap) + '" loading="lazy"><figcaption>' + esc(cap) + "</figcaption></figure>";
+      }).join("") + '</div><p class="fine">' + T("示意畫面，資料皆為虛構。", "Illustrative screens; all data is fictional.") + "</p></section>";
     }
 
+    /* ---------- capabilities ---------- */
+    var caps = C.capabilities || [];
+    var LBL = { done: T("已做過", "Built"), partial: T("部分做過", "Partly built"), plan: T("規劃中", "Planned"), no: T("尚未做過", "Not yet") };
+    var count = { done: 0, partial: 0, plan: 0, no: 0 };
+    caps.forEach(function (c) { count[c.status] = (count[c.status] || 0) + 1; });
+    function capGrid(g) {
+      var order = { done: 0, partial: 1, plan: 2, no: 3 };
+      return '<div class="caps">' + caps.filter(function (c) { return c.group === g; })
+        .sort(function (a, b) { return order[a.status] - order[b.status]; })
+        .map(function (c) {
+          var n = pick(c.note);
+          return '<div class="cap ' + esc(c.status) + '"><span class="dot ' + esc(c.status) + '" title="' + LBL[c.status] + '"></span><div><b>' + esc(pick(c.name)) + "</b>" + (n ? "<span>" + esc(n) + "</span>" : "<span>" + LBL[c.status] + "</span>") + "</div></div>";
+        }).join("") + "</div>";
+    }
+    html += '<section class="panel"><h2>' + T("可承接項目", "What I can build") + '<span class="en">services</span></h2>' +
+      '<div class="cap-sum">' + ["done", "partial", "plan", "no"].map(function (k) { return '<span><i class="dot ' + k + '"></i>' + LBL[k] + " " + (count[k] || 0) + "</span>"; }).join("") + "</div>" +
+      '<div class="cap-group"><h4>' + T("整套方案", "Full systems") + "</h4>" + capGrid("package") + "</div>" +
+      '<div class="cap-group"><h4>' + T("單項功能", "Features") + "</h4>" + capGrid("item") + "</div>" +
+      '<div class="cap-group"><h4>' + T("清單以外也能做", "Also") + '</h4><ul class="extras">' + (C.extras || []).map(function (x) { return "<li>" + esc(pick(x)) + "</li>"; }).join("") + "</ul></div></section>";
+
+    /* ---------- skills ---------- */
+    var skills = [
+      ["Tools", T("No-Code／Low-Code・Vibe coding", "No-code / low-code · vibe coding"), ["Google AppSheet", "Google Apps Script (GAS)", "Make・n8n・Zapier", "API／Webhook", "LINE Messaging API・LIFF", "HTML・CSS・JavaScript", "Claude（MCP）", "Figma・Canva・Notion・Slack"]],
+      ["Data", T("資料建模・資料視覺化", "Data modelling · visualization"), ["Google Sheets・GCP", "SQL " + T("基礎", "basics"), "Microsoft 365", "Looker Studio／Power BI"]],
+      ["Core", "What, When, How", lang === "en" ? ["Priority", "Efficiency", "Communication", "Pain points", "Better solutions"] : ["排定優先順序", "效率", "溝通", "找出痛點", "更好的解法"]],
+      ["Domain", T("領域知識", "Domain knowledge"), lang === "en" ? ["Patent and trademark workflows", "Billing and invoicing", "Taiwan tax and FX reporting", "Booking, scheduling, payouts"] : ["專利與商標案件流程", "請款與發票", "台灣稅務與外匯申報", "預約、排班與費用結算"]]
+    ];
+    html += '<section class="panel"><h2>' + T("能力", "Skills") + '<span class="en">skills</span></h2><div class="skills">' +
+      skills.map(function (s) { return '<div class="skill"><div class="hd"><b>' + s[0] + "</b><span>" + s[1] + "</span></div>" + list(s[2], "tree") + "</div>"; }).join("") + "</div></section>";
+
+    /* ---------- experience ---------- */
+    var tl = [
+      [T("2026.10 – 現在", "Oct 2026 – now"), T("產品工程師（獨立接案）", "Product Engineer (freelance)"), T("遠端", "Remote")],
+      [v("firm.start", T("到職年月", "Start date")) + T(" – 現在", " – now"), esc(get("firm.title")), firmName + T("・多數時間遠端", " · mostly remote")]
+    ];
+    (C.jobs || []).forEach(function (j, i) {
+      var per = pick(j.period);
+      if (!per) note("jobs." + i + ".period", pick(j.title) + T(" 期間（可留空）", " period (optional)"));
+      tl.push([per || (SHOW ? todo(T("期間", "Period")) : ""), esc(pick(j.title)), esc(pick(j.org))]);
+    });
+    tl.push([v("education.year", T("畢業年份", "Year")), T("學士", "B.A."), school]);
+    html += '<section class="panel"><h2>' + T("經歷與學歷", "Experience and education") + '<span class="en">experience</span></h2><ul class="timeline">' +
+      tl.map(function (r) { return '<li><div class="when">' + r[0] + '</div><div class="what"><b>' + r[1] + "</b><span>" + r[2] + "</span></div></li>"; }).join("") + "</ul></section>";
+
+    html += '<footer class="site">' + T("合作洽詢：", "Get in touch: ") + (email ? '<a href="mailto:' + esc(email) + '">' + esc(email) + "</a>" : (SHOW ? todo("Email") : "")) + "</footer>";
+
+    if (SHOW && missing.length) {
+      html = '<div class="todo-panel"><strong>' + T("待填清單（共 " + missing.length + " 項）：在 config.js 填好後，把 showMissing 改成 false 就會隱藏這一區", missing.length + " fields left in config.js. Set showMissing to false to hide this panel.") + "</strong><ol>" +
+        missing.map(function (m) { return "<li>" + esc(m.label) + " <code>" + esc(m.path) + "</code></li>"; }).join("") + "</ol></div>" + html;
+    }
     document.getElementById("app").innerHTML = html;
   }
 
   function setLang(l) {
     lang = l === "en" ? "en" : "zh";
     try { localStorage.setItem("site-lang", lang); } catch (e) {}
-    if (location.hash !== "#" + lang) { try { history.replaceState(null, "", "#" + lang); } catch (e) {} }
+    try { history.replaceState(null, "", "#" + lang); } catch (e) {}
     render();
   }
   document.getElementById("btn-zh").addEventListener("click", function () { setLang("zh"); });
