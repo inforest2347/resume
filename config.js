@@ -11,7 +11,7 @@
    ========================================================= */
 
 window.SITE_CONFIG = {
-  showMissing: true,
+  showMissing: False,
   defaultLang: "zh",          // 打開網站時預設語言："zh" 或 "en"
 
   /* ---------- 基本資料 ---------- */
