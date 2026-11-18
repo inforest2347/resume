@@ -114,6 +114,42 @@ window.SITE_CONFIG = {
         en: "AI makes writing code fast. The hard part is deciding what to build, what the rules are, and what should run on its own versus stay with people. Having worked in customer service, retail, sales support and law-firm operations, I listen to the front line first, sort scattered needs into three layers (data, process, screens), and only then build."
       },
       nums: [["12", { zh: "處流程衝突", en: "process conflicts" }], ["6", { zh: "份藍圖文件", en: "blueprint docs" }], ["3", { zh: "級自動化", en: "automation tiers" }]],
+      scenarios: [
+        { t: { zh: "資料散在 LINE 群組和好幾份試算表", en: "Data scattered across chat groups and spreadsheets" }, d: { zh: "每天花時間對名單、對帳、追進度。", en: "Hours spent matching lists, payments and progress." } },
+        { t: { zh: "規則都在老闆或資深同事腦袋裡", en: "Rules live in the owner's or seniors' heads" }, d: { zh: "新人要很久才上手，換人就出錯。", en: "New staff take months; a hand-over breaks things." } },
+        { t: { zh: "想導入 AI 或自動化，不知從哪開始", en: "Want AI or automation, no idea where to start" }, d: { zh: "工具很多，但不確定哪些工作適合交出去。", en: "Plenty of tools, unclear which work to hand over." } },
+        { t: { zh: "有系統，但大家不想用", en: "There is a system, but nobody wants to use it" }, d: { zh: "畫面跟實際工作對不上，最後又回到紙本和 Excel。", en: "Screens don't match the real work, so people go back to paper and Excel." } }
+      ],
+      roles: [
+        { t: { zh: "需求翻譯與架構設計", en: "Needs translation and system design" },
+          s: { zh: "把第一線的話，變成資料、流程、畫面三層架構", en: "Turn what the front line says into data, process and screens" },
+          does: [{ zh: "訪談各角色，找出真正的問題", en: "Interview each role to find the real problem" }, { zh: "畫出系統藍圖，標出決定時機與修改代價", en: "Blueprint with when-to-decide and cost-of-change" }, { zh: "權限與角色分工", en: "Roles and permissions" }],
+          proof: [{ zh: "匹克球新創：需求到藍圖 4 小時，8 角色 × 23 項權限表", en: "Pickleball startup: brief to blueprint in 4 hours; 8 roles × 23 data areas" }, { zh: "事務所：十多年資料庫拆成 6 檔、54 張表", en: "Law firm: a 10+ year database split into 6 files, 54 tables" }] },
+        { t: { zh: "AI 與自動化導入", en: "AI and automation rollout" },
+          s: { zh: "找出重複、耗時的工作，交給系統和 AI", en: "Find repetitive, time-consuming work and hand it to systems and AI" },
+          does: [{ zh: "盤點每天最花時間的重複作業", en: "List the most time-consuming repeat tasks" }, { zh: "選合適的工具，先做一個流程試行再擴大", en: "Pick the right tool, pilot one process, then expand" }, { zh: "用 AI 加速開發，規則與驗收自己把關", en: "Build faster with AI while keeping rules and sign-off" }],
+          proof: [{ zh: "事務所 26 項自動化，每月省下約 40 小時人工", en: "26 automations at the law firm, about 40 staff hours saved a month" }, { zh: "自製 MCP 與長期脈絡庫，讓 AI 照團隊方式工作", en: "Own MCP servers and context store so AI works the team's way" }] },
+        { t: { zh: "白話溝通與教育訓練", en: "Plain-language communication and training" },
+          s: { zh: "把技術翻成業主、現場人員聽得懂的話", en: "Turn technical detail into words owners and staff understand" },
+          does: [{ zh: "用業主的語言說明架構、代價與選項", en: "Explain structure, cost and options in the owner's terms" }, { zh: "依部門寫系統說明，附操作示範", en: "Department guides with how-to demos" }, { zh: "給一般使用者的教學圖卡", en: "Teaching cards for everyday users" }],
+          proof: [{ zh: "長輩報名教學圖卡，用系統實際畫面一步一步標示", en: "Step-by-step sign-up cards for older members, made from real screens" }, { zh: "事務所新版系統說明文件，依部門分章", en: "New system guide for the law firm, by department" }] },
+        { t: { zh: "SOP 與使用規範", en: "SOPs and usage rules" },
+          s: { zh: "讓流程可以交接，讓大家用 AI 和系統不會亂", en: "Make processes hand-over-ready and keep AI and system use in order" },
+          does: [{ zh: "撰寫操作手冊、使用範例與常見問答", en: "Manuals, examples and FAQs" }, { zh: "定出哪些步驟全自動、哪些要人確認", en: "Decide which steps run alone and which need a person" }, { zh: "資料存取權限與版本紀錄", en: "Data access rules and version history" }],
+          proof: [{ zh: "三級自動化分界：全自動／系統算好人確認／人工判斷", en: "Three automation tiers: automatic, system-prepared, human" }, { zh: "客服知識庫：業主改試算表，幾分鐘內同步", en: "Support knowledge base the owner updates from a spreadsheet" }] },
+        { t: { zh: "品質把關與持續優化", en: "Quality checks and continuous improvement" },
+          s: { zh: "站在使用者和技術之間，確認系統真的好用", en: "Stand between users and the tech to make sure it really works" },
+          does: [{ zh: "上線前測試，上線後蒐集回報找根因", en: "Test before launch; trace reported issues to the root cause" }, { zh: "逐項核對 AI 產出，抓出錯誤", en: "Check AI output item by item and catch mistakes" }, { zh: "先量測再優化，不浪費預算", en: "Measure before optimizing, so no budget is wasted" }],
+          proof: [{ zh: "102 個自動化測試檔、每小時健康檢查", en: "102 automated test files and hourly health checks" }, { zh: "使用者反映找不到球面 → 改版後每個畫面都有醒目提示", en: "Users missed their court, so every screen now shows it clearly" }] }
+      ],
+      process: [
+        { t: { zh: "初步訪談", en: "First conversation" }, d: { zh: "了解現況與想解決的事", en: "Where you are, what to solve" } },
+        { t: { zh: "現況診斷", en: "Diagnosis" }, d: { zh: "流程盤點，找出矛盾與浪費", en: "Map the process, find conflicts and waste" } },
+        { t: { zh: "藍圖與方案", en: "Blueprint and options" }, d: { zh: "2～3 個方案，附工時與費用", en: "2–3 options with hours and cost" } },
+        { t: { zh: "小範圍試行", en: "Pilot" }, d: { zh: "先做一個流程驗證效果", en: "Prove it on one process first" } },
+        { t: { zh: "導入與教育訓練", en: "Rollout and training" }, d: { zh: "手冊、示範、上線陪同", en: "Manuals, demos, launch support" } },
+        { t: { zh: "陪跑與優化", en: "Ongoing support" }, d: { zh: "按月維護，依回報調整", en: "Monthly upkeep, adjusted from feedback" } }
+      ],
       steps: [
         { t: { zh: "聽第一線，找到真正的問題", en: "Listen to the front line and find the real problem" },
           p: { zh: "客戶說的「功能」常常是解法，不是問題。先看紀錄、問現場，確認要解決的是什麼。", en: "What clients ask for is often a solution, not the problem. I read the records and ask the people on site first." },

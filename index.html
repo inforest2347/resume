@@ -110,6 +110,24 @@ h1 small { font-size: 18px; font-weight: 500; color: var(--muted); margin-left: 
 .li { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 10px; }
 .li b { display: block; font-size: 15.5px; }
 .li p { margin: 2px 0 8px; font-size: 14px; color: var(--muted); }
+.scen { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.scen div { background: var(--panel); border-radius: 10px; padding: 14px 16px; border-top: 4px solid var(--sun); }
+.scen b { display: block; font-size: 15.5px; line-height: 1.45; margin-bottom: 4px; text-wrap: balance; }
+.scen span { font-size: 13.5px; color: var(--muted); }
+.roles { display: grid; gap: 12px; }
+.rcard { background: var(--panel); border-radius: 12px; padding: 18px 22px; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr) minmax(0, 1.1fr); gap: 20px; align-items: start; }
+.rcard h3 { margin: 0 0 4px; font-size: 18px; }
+.rcard .rs { margin: 0; color: var(--muted); font-size: 14.5px; }
+.rcard h4 { margin: 0 0 6px; font-size: 12px; letter-spacing: .06em; color: var(--muted); font-weight: 500; }
+.rcard ul { margin: 0; padding-left: 1.1em; font-size: 14.5px; display: grid; gap: 4px; }
+.rcard .proof { background: var(--sun); color: var(--on-sun); border-radius: 8px; padding: 10px 14px; }
+.rcard .proof h4 { color: var(--on-sun); opacity: .7; }
+.proc { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; counter-reset: p; }
+.proc div { position: relative; background: var(--panel); padding: 14px 14px 14px 16px; border-right: 1px solid var(--line); }
+.proc div:first-child { border-radius: 10px 0 0 10px; } .proc div:last-child { border-radius: 0 10px 10px 0; border-right: 0; }
+.proc div::before { counter-increment: p; content: counter(p, decimal-leading-zero); display: block; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.proc b { display: block; font-size: 15px; margin: 2px 0 4px; }
+.proc span { font-size: 13px; color: var(--muted); line-height: 1.5; display: block; }
 .method { display: grid; gap: 12px; }
 .step { background: var(--panel); border-radius: 12px; padding: 20px 24px; display: grid; grid-template-columns: 54px minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
 .step .no { width: 46px; height: 46px; border-radius: 50%; background: var(--sun); color: var(--on-sun); font-family: var(--font-mono); font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
@@ -136,6 +154,12 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
   .exp { grid-template-columns: 1fr; }
   .feature, .feature.wide { grid-template-columns: 1fr; }
   .imgs { flex-wrap: wrap; }
+}
+@media (max-width: 900px) {
+  .scen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rcard { grid-template-columns: 1fr; gap: 12px; }
+  .proc { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .proc div, .proc div:first-child, .proc div:last-child { border-radius: 10px; border-right: 0; }
 }
 @media (max-width: 760px) {
   .step { grid-template-columns: 36px minmax(0, 1fr); gap: 10px 12px; padding: 16px; }
@@ -164,6 +188,8 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
   .nums div { min-width: 0; flex: 1; padding: 6px 8px; }
   .nums b { font-size: 17px; }
   .cats, .list, .flow, .tiers { grid-template-columns: 1fr; }
+  .proc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rcard { padding: 16px; }
   .imgs.phone figure { width: calc(50% - 6px); }
   .skills { grid-template-columns: 1fr; }
   .nums { flex-wrap: wrap; }
@@ -260,12 +286,19 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
     html += '<section role="tabpanel"><div class="exp"><p><b>' + T("經驗：", "Experience: ") + "</b>" + esc(pick(cur.exp)) + '</p><div class="nums">' +
       (cur.nums || []).map(function (n) { return "<div><b>" + esc(n[0]) + "</b><span>" + esc(pick(n[1])) + "</span></div>"; }).join("") + "</div></div>" +
       project(cur.project);
+    if ((cur.scenarios || []).length) html += '<h3 class="sec-h">' + T("適合找我的情境", "WHEN TO CALL ME") + '</h3><div class="scen">' + cur.scenarios.map(function (x) { return "<div><b>" + esc(pick(x.t)) + "</b><span>" + esc(pick(x.d)) + "</span></div>"; }).join("") + "</div>";
+    if ((cur.roles || []).length) html += '<h3 class="sec-h">' + T("我能扮演的角色", "ROLES I PLAY") + '</h3><div class="roles">' + cur.roles.map(function (r) {
+      return '<article class="rcard"><div><h3>' + esc(pick(r.t)) + '</h3><p class="rs">' + esc(pick(r.s)) + "</p></div>" +
+        "<div><h4>" + T("我會做", "WHAT I DO") + "</h4>" + li(r.does) + "</div>" +
+        '<div class="proof"><h4>' + T("實績", "TRACK RECORD") + "</h4>" + li(r.proof) + "</div></article>";
+    }).join("") + "</div>";
     if (cur.steps) {
-      html += '<h3 class="sec-h">' + T("我怎麼把需求變成架構", "HOW I TURN NEEDS INTO A STRUCTURE") + '</h3><div class="method">' + cur.steps.map(function (st, i) {
+      html += '<h3 class="sec-h">' + T("做法與案例", "APPROACH AND CASES") + '</h3><div class="method">' + cur.steps.map(function (st, i) {
         return '<article class="step"><span class="no">' + (i + 1) + "</span><div><h3>" + esc(pick(st.t)) + '</h3><p class="pr">' + esc(pick(st.p)) + "</p>" +
           (st.tiers ? '<div class="tiers">' + st.tiers.map(function (x) { return "<div><b>" + esc(pick(x)) + "</b>" + esc(pick(x.d)) + "</div>"; }).join("") + "</div>" : "") +
           '</div><div class="cases">' + (st.ex || []).map(function (x) { return '<div class="case"><b>' + T("實例", "CASE") + "</b>" + esc(pick(x)) + "</div>"; }).join("") + "</div></article>";
       }).join("") + "</div>";
+      if ((cur.process || []).length) html += '<h3 class="sec-h">' + T("合作流程", "HOW WE WORK TOGETHER") + '</h3><div class="proc">' + cur.process.map(function (x) { return "<div><b>" + esc(pick(x.t)) + "</b><span>" + esc(pick(x.d)) + "</span></div>"; }).join("") + "</div>";
       if ((cur.deliverables || []).length) html += '<h3 class="sec-h">' + T("交付文件", "DELIVERABLES") + '</h3><ul class="dlv">' + cur.deliverables.map(function (x) { return "<li>" + esc(pick(x)) + "</li>"; }).join("") + "</ul>";
     }
     var fe = (cur.items || []).filter(function (it) { return (it.shots || []).length; }), ls = (cur.items || []).filter(function (it) { return !(it.shots || []).length; });
