@@ -73,33 +73,9 @@ h1 small { font-size: 18px; font-weight: 500; color: var(--muted); margin-left: 
 .nums b { display: block; font-family: var(--font-mono); font-size: 20px; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; }
 .nums span { font-size: 12px; opacity: .75; }
 
-.svc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.item { background: var(--panel); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--line); }
-.item.open { grid-column: 1 / -1; border-color: var(--ink); }
-.item-head { display: flex; gap: 10px; align-items: flex-start; }
-.item-head > div { flex: 1; min-width: 0; }
-.item h3 { margin: 0; font-size: 17px; line-height: 1.4; }
-.item .desc { margin: 4px 0 8px; font-size: 14.5px; color: var(--muted); }
-.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; margin-top: 8px; display: inline-block; }
-.dot.done { background: var(--ok); } .dot.partial { background: var(--part); } .dot.plan { border: 2px solid var(--plan); } .dot.no { border: 1.5px dashed var(--muted); }
-.feat { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
-.feat span { font-size: 12px; border: 1px solid var(--line); border-radius: 99px; padding: 0 8px; display: inline-flex; align-items: center; gap: 5px; }
-.feat span i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-.feat .d i { background: var(--ok); } .feat .p i { background: var(--part); }
-.where { font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
-.where b { font-weight: 500; color: var(--muted); }
-.where span { background: var(--well); padding: 1px 8px; border-radius: 4px; }
-.more { font-size: 13px; font-weight: 700; background: none; border: 1px solid var(--ink); color: var(--ink); border-radius: 99px; padding: 2px 12px; cursor: pointer; white-space: nowrap; }
-.item.open .more { background: var(--ink); color: var(--board); }
-.ex { display: none; margin-top: 16px; border-top: 1px dashed var(--line); padding-top: 16px; }
-.item.open .ex { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 22px; }
-.item.open .ex.noshot { grid-template-columns: 1fr; }
-.shots { display: grid; gap: 10px; align-content: start; }
-.shots figure { margin: 0; background: var(--well); border-radius: 8px; padding: 10px; }
-.shots img { width: 100%; height: auto; display: block; border-radius: 4px; }
-.shots figcaption { font-size: 12px; color: var(--muted); margin-top: 4px; }
-.story h4 { margin: 0 0 8px; font-size: 15px; }
-.story h4 small { font-weight: 500; color: var(--muted); margin-left: 8px; }
+.proj { background: var(--panel); border-radius: 10px; padding: 16px 20px; margin-bottom: 14px; }
+.proj h4 { margin: 0 0 10px; font-size: 15px; }
+.proj h4 small { font-weight: 500; color: var(--muted); margin-left: 8px; }
 .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .flow > div { background: var(--well); border-radius: 8px; padding: 10px 12px; font-size: 13.5px; }
 .flow b { display: block; font-size: 12px; letter-spacing: .06em; color: var(--muted); margin-bottom: 4px; }
@@ -108,8 +84,32 @@ h1 small { font-size: 18px; font-weight: 500; color: var(--muted); margin-left: 
 .flow .res b { color: var(--on-sun); opacity: .7; }
 .stack { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
 .stack span { font-family: var(--font-mono); font-size: 11.5px; background: var(--well); border-radius: 3px; padding: 0 7px; color: var(--muted); }
-.demo-btn { display: inline-flex; gap: 6px; align-items: center; margin-top: 12px; font-size: 14px; font-weight: 700; background: var(--sun); color: var(--on-sun); border: 0; border-radius: 8px; padding: 8px 14px; cursor: pointer; }
-.demo-wrap { grid-column: 1 / -1; margin-top: 4px; padding-top: 16px; border-top: 1px dashed var(--line); }
+.sec-h { font-size: 13px; color: var(--muted); font-weight: 500; letter-spacing: .06em; margin: 22px 0 10px; }
+.feature { background: var(--panel); border-radius: 12px; padding: 22px 24px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 26px; align-items: start; }
+.feature + .feature { margin-top: 14px; }
+.feature.wide { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+.feature h3 { margin: 0 0 4px; font-size: 20px; }
+.feature .desc { margin: 0 0 12px; color: var(--muted); }
+.feature ul.pts { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 8px; }
+.feature ul.pts li { display: grid; grid-template-columns: 6px minmax(0, 1fr); gap: 10px; font-size: 15px; }
+.feature ul.pts li::before { content: ""; border-radius: 3px; background: var(--sun); }
+.feat { display: flex; flex-wrap: wrap; gap: 4px; }
+.feat span { font-size: 12px; border: 1px solid var(--line); border-radius: 99px; padding: 0 8px; display: inline-flex; align-items: center; gap: 5px; }
+.feat span i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.feat .d i { background: var(--ok); } .feat .p i { background: var(--part); }
+.imgs { display: flex; gap: 12px; }
+.imgs figure { margin: 0; background: var(--well); border-radius: 10px; padding: 10px; }
+.imgs.phone figure { width: 230px; }
+.imgs img { width: 100%; height: auto; display: block; border-radius: 6px; }
+.imgs figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.demo-btn { display: inline-flex; gap: 6px; align-items: center; margin-top: 16px; font-size: 14px; font-weight: 700; background: var(--sun); color: var(--on-sun); border: 0; border-radius: 8px; padding: 9px 16px; cursor: pointer; }
+.demo-wrap { grid-column: 1 / -1; padding-top: 18px; border-top: 1px dashed var(--line); }
+.list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.li { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 10px; }
+.li b { display: block; font-size: 15.5px; }
+.li p { margin: 2px 0 8px; font-size: 14px; color: var(--muted); }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; margin-top: 8px; display: inline-block; }
+.dot.done { background: var(--ok); } .dot.partial { background: var(--part); } .dot.plan { border: 2px solid var(--plan); } .dot.no { border: 1.5px dashed var(--muted); }
 .notyet { margin: 14px 0 0; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
 .notyet span { display: inline-flex; align-items: center; gap: 5px; }
 .notyet .dot { margin: 0; }
@@ -118,11 +118,12 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
   .exp { grid-template-columns: 1fr; }
-  .item.open .ex { grid-template-columns: 1fr; }
-  .shots { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  .feature, .feature.wide { grid-template-columns: 1fr; }
+  .imgs { flex-wrap: wrap; }
 }
 @media (max-width: 640px) {
-  .cats, .svc, .flow { grid-template-columns: 1fr; }
+  .cats, .list, .flow { grid-template-columns: 1fr; }
+  .imgs.phone figure { width: calc(50% - 6px); }
   .skills { grid-template-columns: 1fr; }
   .nums { flex-wrap: wrap; }
 }
@@ -144,13 +145,14 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
 <script>var False = false, True = true;</script>
 <script src="config.js"></script>
 <script src="line-demo.js"></script>
+<script src="annuity-demo.js"></script>
 <script>
 (function () {
   var C = window.SITE_CONFIG, BROKEN = !C;
   C = C || {};
   var SHOW = C.showMissing === true;
   var lang = "zh", cat = C.defaultCategory === "admin" ? "admin" : "ops";
-  var open = {}, demoOn = false;
+  var demoOn = "";
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function pick(x) { if (x && typeof x === "object" && !Array.isArray(x) && ("zh" in x || "en" in x)) x = x[lang]; return x == null ? "" : String(x).trim(); }
@@ -181,29 +183,23 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
       '<div class="card"><div class="skills">' + skills + '</div><dl class="langs">' + langs + "</dl></div></section>";
   }
 
-  function story(key) {
+  function project(key) {
     var p = (C.projects || {})[key]; if (!p) return "";
-    return '<div class="story"><h4>' + T("專案：", "Project: ") + esc(pick(p.title)) + "<small>" + esc(pick(p.org)) + "・" + esc(pick(p.meta)) + "</small></h4>" +
+    return '<div class="proj"><h4>' + T("代表專案：", "Project: ") + esc(pick(p.title)) + "<small>" + esc(pick(p.org)) + "・" + esc(pick(p.meta)) + "</small></h4>" +
       '<div class="flow"><div><b>' + T("痛點", "PAIN POINTS") + "</b>" + li(p.pains) + "</div><div><b>" + T("做法", "APPROACH") + "</b>" + li(p.approach) + '</div><div class="res"><b>' + T("成果", "RESULTS") + "</b>" + li(p.results) + "</div></div>" +
-      '<div class="stack">' + (p.stack || []).map(function (s) { return "<span>" + esc(s) + "</span>"; }).join("") + "</div>" + "</div>";
+      '<div class="stack">' + (p.stack || []).map(function (s) { return "<span>" + esc(s) + "</span>"; }).join("") + "</div></div>";
   }
-
-  function item(it, idx) {
-    var id = cat + "-" + idx, isOpen = open[id];
-    var shots = it.shots || [], hasEx = shots.length || it.project || it.demo;
-    var ex = "";
-    if (hasEx) {
-      ex = '<div class="ex' + (shots.length ? "" : " noshot") + '">' +
-        (shots.length ? '<div class="shots">' + shots.map(function (s) { return '<figure><img src="' + esc(s[0]) + '" alt="' + esc(pick(s[1])) + '" loading="lazy"><figcaption>' + esc(pick(s[1])) + T("（示意）", " (illustrative)") + "</figcaption></figure>"; }).join("") + "</div>" : "") +
-        "<div>" + story(it.project) +
-        (it.demo ? '<button type="button" class="demo-btn" data-demo="1">' + (demoOn ? T("■ 收起 LINE 示範", "■ Hide LINE demo") : T("▶ 實際操作 LINE 示範", "▶ Try the LINE demo")) + "</button>" : "") + "</div>" +
-        (it.demo && demoOn ? '<div class="demo-wrap"><div id="line-demo"></div></div>' : "") + "</div>";
-    }
-    return '<article class="item' + (isOpen ? " open" : "") + '"><div class="item-head"><span class="dot ' + esc(it.status || "done") + '"></span><div>' +
-      "<h3>" + esc(pick(it.title)) + '</h3><p class="desc">' + esc(pick(it.desc)) + "</p>" +
-      '<div class="feat">' + (it.feats || []).map(function (f) { return '<span class="' + (f[0] === "p" ? "p" : "d") + '"><i></i>' + esc(pick(f[1])) + "</span>"; }).join("") + "</div>" +
-      '<div class="where"><b>' + T("做過：", "Done at:") + "</b>" + (it.where || []).map(function (w) { return "<span>" + esc(pick(w)) + "</span>"; }).join("") + "</div>" +
-      "</div>" + (hasEx ? '<button type="button" class="more" data-open="' + id + '" aria-expanded="' + !!isOpen + '">' + (isOpen ? T("收合 ▲", "Close ▲") : T("看範例 ▼", "Examples ▼")) + "</button>" : "") + "</div>" + ex + "</article>";
+  function feats(it) { return '<div class="feat">' + (it.feats || []).map(function (f) { return '<span class="' + (f[0] === "p" ? "p" : "d") + '"><i></i>' + esc(pick(f[1])) + "</span>"; }).join("") + "</div>"; }
+  function feature(it) {
+    var shots = it.shots || [], wide = shots.some(function (x) { return x[2] === "wide"; });
+    return '<article class="feature' + (wide ? " wide" : "") + '"><div><h3>' + esc(pick(it.title)) + '</h3><p class="desc">' + esc(pick(it.desc)) + "</p>" +
+      ((it.points || []).length ? '<ul class="pts">' + it.points.map(function (x) { return "<li><span>" + esc(pick(x)) + "</span></li>"; }).join("") + "</ul>" : "") + feats(it) +
+      (it.demo ? '<button type="button" class="demo-btn" data-demo="' + it.demo + '">' + (demoOn === it.demo ? T("■ 收起示範", "■ Hide demo") : (it.demo === "annuity" ? T("▶ 實際操作 客戶回覆網頁", "▶ Try the client reply page") : T("▶ 實際操作 LINE 示範", "▶ Try the LINE demo"))) + "</button>" : "") + "</div>" +
+      '<div class="imgs' + (wide ? "" : " phone") + '">' + shots.map(function (x) { return '<figure><img src="' + esc(x[0]) + '" alt="' + esc(pick(x[1])) + '" loading="lazy"><figcaption>' + esc(pick(x[1])) + T("（示意）", " (illustrative)") + "</figcaption></figure>"; }).join("") + "</div>" +
+      (it.demo && demoOn === it.demo ? '<div class="demo-wrap"><div id="' + it.demo + '-demo"></div></div>' : "") + "</article>";
+  }
+  function listItem(it) {
+    return '<div class="li"><span class="dot ' + (it.status || "done") + '"></span><div><b>' + esc(pick(it.title)) + "</b><p>" + esc(pick(it.desc)) + "</p>" + feats(it) + "</div></div>";
   }
 
   function render() {
@@ -219,7 +215,10 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
     }).join("") + "</div>";
     html += '<section role="tabpanel"><div class="exp"><p><b>' + T("經驗：", "Experience: ") + "</b>" + esc(pick(cur.exp)) + '</p><div class="nums">' +
       (cur.nums || []).map(function (n) { return "<div><b>" + esc(n[0]) + "</b><span>" + esc(pick(n[1])) + "</span></div>"; }).join("") + "</div></div>" +
-      '<div class="svc">' + (cur.items || []).map(item).join("") + "</div>";
+      project(cur.project);
+    var fe = (cur.items || []).filter(function (it) { return (it.shots || []).length; }), ls = (cur.items || []).filter(function (it) { return !(it.shots || []).length; });
+    html += '<h3 class="sec-h">' + T("重點展示", "HIGHLIGHTS") + "</h3>" + fe.map(feature).join("");
+    if (ls.length) html += '<h3 class="sec-h">' + T("也能承接", "ALSO") + '</h3><div class="list">' + ls.map(listItem).join("") + "</div>";
     if ((cur.notyet || []).length || (cur.planned || []).length) {
       html += '<p class="notyet">' + ((cur.notyet || []).length ? T("尚未做過：", "Not yet: ") + cur.notyet.map(function (x) { return '<span><i class="dot no"></i>' + esc(pick(x)) + "</span>"; }).join("") : "") +
         ((cur.planned || []).length ? "　" + T("規劃中：", "Planned: ") + cur.planned.map(function (x) { return '<span><i class="dot plan"></i>' + esc(pick(x)) + "</span>"; }).join("") : "") + "</p>";
@@ -230,21 +229,17 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
     document.getElementById("app").innerHTML = html;
     var ld = document.getElementById("line-demo");
     if (ld && window.LineDemo) window.LineDemo.mount(ld, lang);
-  }
-
-  function initOpen() {
-    open = {};
-    ["ops", "admin"].forEach(function (k) { ((C.services || {})[k] || { items: [] }).items.forEach(function (it, i) { if (it.open) open[k + "-" + i] = true; }); });
+    var ad = document.getElementById("annuity-demo");
+    if (ad && window.AnnuityDemo) window.AnnuityDemo.mount(ad, lang);
   }
 
   document.getElementById("app").addEventListener("click", function (e) {
-    var b = e.target.closest && e.target.closest("[data-cat],[data-open],[data-demo]");
+    var b = e.target.closest && e.target.closest("[data-cat],[data-demo]");
     if (!b) return;
-    if (b.dataset.cat) { cat = b.dataset.cat; demoOn = false; try { history.replaceState(null, "", "#" + cat); } catch (err) {} render(); return; }
-    if (b.dataset.open) { open[b.dataset.open] = !open[b.dataset.open]; render(); return; }
+    if (b.dataset.cat) { cat = b.dataset.cat; demoOn = ""; try { history.replaceState(null, "", "#" + cat); } catch (err) {} render(); return; }
     if (b.dataset.demo) {
-      demoOn = !demoOn; render();
-      var d = document.getElementById("line-demo"); if (d) d.scrollIntoView({ behavior: "smooth", block: "start" });
+      demoOn = demoOn === b.dataset.demo ? "" : b.dataset.demo; render();
+      var d = document.getElementById(demoOn + "-demo"); if (d) d.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
   function setLang(l) { lang = l === "en" ? "en" : "zh"; try { localStorage.setItem("site-lang", lang); } catch (e) {} render(); }
@@ -255,7 +250,6 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
   var h = location.hash.slice(1); if (h === "ops" || h === "admin") cat = h;
   var saved = null; try { saved = localStorage.getItem("site-lang"); } catch (e) {}
   lang = saved === "en" || saved === "zh" ? saved : (C.defaultLang === "en" ? "en" : "zh");
-  initOpen();
   render();
 })();
 </script>
