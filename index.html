@@ -49,6 +49,7 @@ h1 small { font-size: 18px; font-weight: 500; color: var(--muted); margin-left: 
 .intro { color: var(--muted); margin: 8px 0 0; max-width: 44ch; }
 .contact { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 14px; font-size: 14px; }
 .card { background: var(--panel); border-radius: 8px; padding: 18px 20px; }
+.skillbox > summary { display: none; }
 .skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 18px; }
 .skills h4 { margin: 0 0 4px; font-size: 13px; letter-spacing: .04em; }
 .skills h4 span { font-weight: 500; color: var(--muted); margin-left: 6px; font-size: 12px; }
@@ -59,10 +60,11 @@ h1 small { font-size: 18px; font-weight: 500; color: var(--muted); margin-left: 
 .langs dd { margin: 0; }
 
 /* categories */
-.cats { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 6px 0 16px; }
+.cats { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 6px 0 16px; }
 .cat { text-align: left; color: inherit; background: var(--panel); border: 2px solid transparent; border-radius: 10px; padding: 16px 20px; cursor: pointer; display: grid; gap: 2px; }
 .cat b { font-size: 20px; font-weight: 900; }
-.cat span { font-size: 14px; color: var(--muted); }
+.cat .cat-sub { font-size: 14px; color: var(--muted); }
+.cat .short { display: none; }
 .cat:hover { border-color: var(--line); }
 .cat[aria-selected="true"] { border-color: var(--ink); box-shadow: inset 0 -5px 0 var(--sun); }
 
@@ -108,6 +110,20 @@ h1 small { font-size: 18px; font-weight: 500; color: var(--muted); margin-left: 
 .li { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 10px; }
 .li b { display: block; font-size: 15.5px; }
 .li p { margin: 2px 0 8px; font-size: 14px; color: var(--muted); }
+.method { display: grid; gap: 12px; }
+.step { background: var(--panel); border-radius: 12px; padding: 20px 24px; display: grid; grid-template-columns: 54px minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.step .no { width: 46px; height: 46px; border-radius: 50%; background: var(--sun); color: var(--on-sun); font-family: var(--font-mono); font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.step h3 { margin: 4px 0 6px; font-size: 19px; text-wrap: balance; }
+.step .pr { margin: 0; color: var(--muted); }
+.cases { display: grid; gap: 8px; }
+.case { background: var(--well); border-radius: 8px; padding: 10px 14px; font-size: 14.5px; border-left: 4px solid var(--sun); }
+.case b { display: block; font-size: 12px; letter-spacing: .06em; color: var(--muted); margin-bottom: 2px; }
+.tiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 12px; }
+.tiers div { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: 13px; }
+.tiers div b { display: block; font-size: 14px; }
+.tiers div:nth-child(1) { border-top: 4px solid var(--ok); } .tiers div:nth-child(2) { border-top: 4px solid var(--sun); } .tiers div:nth-child(3) { border-top: 4px solid var(--ink); }
+.dlv { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.dlv li { background: var(--panel); border: 1px solid var(--line); border-radius: 99px; padding: 4px 14px; font-size: 14px; }
 .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; margin-top: 8px; display: inline-block; }
 .dot.done { background: var(--ok); } .dot.partial { background: var(--part); } .dot.plan { border: 2px solid var(--plan); } .dot.no { border: 1.5px dashed var(--muted); }
 .notyet { margin: 14px 0 0; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
@@ -121,8 +137,33 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
   .feature, .feature.wide { grid-template-columns: 1fr; }
   .imgs { flex-wrap: wrap; }
 }
+@media (max-width: 760px) {
+  .step { grid-template-columns: 36px minmax(0, 1fr); gap: 10px 12px; padding: 16px; }
+  .step .no { width: 34px; height: 34px; font-size: 16px; }
+  .step .cases { grid-column: 1 / -1; }
+  .step h3 { margin-top: 2px; font-size: 17px; }
+}
 @media (max-width: 640px) {
-  .cats, .list, .flow { grid-template-columns: 1fr; }
+  .bar { padding-top: 10px; }
+  .hero { padding: 6px 0 14px; gap: 14px; }
+  h1 { font-size: 30px; }
+  h1 small { font-size: 15px; }
+  .role { font-size: 15px; margin-top: 8px; }
+  .tag { font-size: 16px; margin-top: 10px; }
+  .intro { font-size: 14.5px; }
+  .skillbox { padding: 12px 16px; }
+  .skillbox > summary { display: list-item; cursor: pointer; font-weight: 700; font-size: 14px; }
+  .skillbox[open] > summary { margin-bottom: 10px; }
+  .cats { position: sticky; top: 0; z-index: 5; background: var(--board); grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 6px; margin: 0 -20px 10px; padding: 8px 20px; }
+  .cat { padding: 9px 4px; text-align: center; border-radius: 8px; border-width: 1.5px; }
+  .cat b { font-size: 15px; }
+  .cat .full, .cat .cat-sub { display: none; }
+  .cat .short { display: inline; }
+  .cat[aria-selected="true"] { background: var(--ink); color: var(--board); box-shadow: none; }
+  .exp { padding: 14px 16px; }
+  .nums div { min-width: 0; flex: 1; padding: 6px 8px; }
+  .nums b { font-size: 17px; }
+  .cats, .list, .flow, .tiers { grid-template-columns: 1fr; }
   .imgs.phone figure { width: calc(50% - 6px); }
   .skills { grid-template-columns: 1fr; }
   .nums { flex-wrap: wrap; }
@@ -151,7 +192,8 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
   var C = window.SITE_CONFIG, BROKEN = !C;
   C = C || {};
   var SHOW = C.showMissing === true;
-  var lang = "zh", cat = C.defaultCategory === "admin" ? "admin" : "ops";
+  var CATS = ["consult", "ops", "admin"];
+  var lang = "zh", cat = CATS.indexOf(C.defaultCategory) >= 0 ? C.defaultCategory : "consult";
   var demoOn = "";
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -161,6 +203,7 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
   function li(a) { return "<ul>" + (a || []).map(function (x) { return "<li>" + esc(pick(x)) + "</li>"; }).join("") + "</ul>"; }
   function todo(l) { return SHOW ? '<mark class="todo">' + esc(l) + "</mark>" : ""; }
 
+  function wideScreen() { try { return !window.matchMedia("(max-width: 640px)").matches; } catch (e) { return true; } }
   function hero() {
     var name = get("person.name"), nick = get("person.nickname"), email = get("person.email"), phone = get("person.phone"), links = [];
     links.push("<span>" + esc(get("person.location")) + "</span>");
@@ -180,7 +223,7 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
       '<p class="tag">「' + esc(get("person.tagline")) + "」</p>" +
       '<p class="intro">' + esc(get("person.intro")) + "</p>" +
       '<div class="contact">' + links.join("") + "</div></div>" +
-      '<div class="card"><div class="skills">' + skills + '</div><dl class="langs">' + langs + "</dl></div></section>";
+      '<details class="card skillbox"' + (wideScreen() ? " open" : "") + '><summary>' + T("能力與語言", "Skills and languages") + '</summary><div class="skills">' + skills + '</div><dl class="langs">' + langs + "</dl></details></section>";
   }
 
   function project(key) {
@@ -210,14 +253,23 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
     var S = C.services || {}, cur = S[cat] || { items: [] };
     var html = BROKEN ? '<div class="err">' + T("config.js 載入失敗，可能有打錯的地方（例如少了逗號或引號）。", "config.js failed to load, probably a typo such as a missing comma or quote.") + "</div>" : "";
     html += hero();
-    html += '<div class="cats" role="tablist">' + ["ops", "admin"].filter(function (k) { return S[k]; }).map(function (k) {
-      return '<button type="button" class="cat" role="tab" data-cat="' + k + '" aria-selected="' + (cat === k) + '"><b>' + esc(pick(S[k].title)) + "</b><span>" + esc(pick(S[k].sub)) + "</span></button>";
+    html += '<div class="cats" role="tablist">' + CATS.filter(function (k) { return S[k]; }).map(function (k) {
+      var full = pick(S[k].title), short = full.split(/[（(]/)[0].trim();
+      return '<button type="button" class="cat" role="tab" data-cat="' + k + '" aria-selected="' + (cat === k) + '"><b><span class="full">' + esc(full) + '</span><span class="short">' + esc(short) + '</span></b><span class="cat-sub">' + esc(pick(S[k].sub)) + "</span></button>";
     }).join("") + "</div>";
     html += '<section role="tabpanel"><div class="exp"><p><b>' + T("經驗：", "Experience: ") + "</b>" + esc(pick(cur.exp)) + '</p><div class="nums">' +
       (cur.nums || []).map(function (n) { return "<div><b>" + esc(n[0]) + "</b><span>" + esc(pick(n[1])) + "</span></div>"; }).join("") + "</div></div>" +
       project(cur.project);
+    if (cur.steps) {
+      html += '<h3 class="sec-h">' + T("我怎麼把需求變成架構", "HOW I TURN NEEDS INTO A STRUCTURE") + '</h3><div class="method">' + cur.steps.map(function (st, i) {
+        return '<article class="step"><span class="no">' + (i + 1) + "</span><div><h3>" + esc(pick(st.t)) + '</h3><p class="pr">' + esc(pick(st.p)) + "</p>" +
+          (st.tiers ? '<div class="tiers">' + st.tiers.map(function (x) { return "<div><b>" + esc(pick(x)) + "</b>" + esc(pick(x.d)) + "</div>"; }).join("") + "</div>" : "") +
+          '</div><div class="cases">' + (st.ex || []).map(function (x) { return '<div class="case"><b>' + T("實例", "CASE") + "</b>" + esc(pick(x)) + "</div>"; }).join("") + "</div></article>";
+      }).join("") + "</div>";
+      if ((cur.deliverables || []).length) html += '<h3 class="sec-h">' + T("交付文件", "DELIVERABLES") + '</h3><ul class="dlv">' + cur.deliverables.map(function (x) { return "<li>" + esc(pick(x)) + "</li>"; }).join("") + "</ul>";
+    }
     var fe = (cur.items || []).filter(function (it) { return (it.shots || []).length; }), ls = (cur.items || []).filter(function (it) { return !(it.shots || []).length; });
-    html += '<h3 class="sec-h">' + T("重點展示", "HIGHLIGHTS") + "</h3>" + fe.map(feature).join("");
+    if (fe.length) html += '<h3 class="sec-h">' + T("重點展示", "HIGHLIGHTS") + "</h3>" + fe.map(feature).join("");
     if (ls.length) html += '<h3 class="sec-h">' + T("也能承接", "ALSO") + '</h3><div class="list">' + ls.map(listItem).join("") + "</div>";
     if ((cur.notyet || []).length || (cur.planned || []).length) {
       html += '<p class="notyet">' + ((cur.notyet || []).length ? T("尚未做過：", "Not yet: ") + cur.notyet.map(function (x) { return '<span><i class="dot no"></i>' + esc(pick(x)) + "</span>"; }).join("") : "") +
@@ -236,7 +288,11 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
   document.getElementById("app").addEventListener("click", function (e) {
     var b = e.target.closest && e.target.closest("[data-cat],[data-demo]");
     if (!b) return;
-    if (b.dataset.cat) { cat = b.dataset.cat; demoOn = ""; try { history.replaceState(null, "", "#" + cat); } catch (err) {} render(); return; }
+    if (b.dataset.cat) {
+      cat = b.dataset.cat; demoOn = ""; try { history.replaceState(null, "", "#" + cat); } catch (err) {} render();
+      var cs = document.querySelector(".cats"); if (cs && !wideScreen()) cs.scrollIntoView({ block: "start" });
+      return;
+    }
     if (b.dataset.demo) {
       demoOn = demoOn === b.dataset.demo ? "" : b.dataset.demo; render();
       var d = document.getElementById(demoOn + "-demo"); if (d) d.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -245,9 +301,9 @@ footer { position: relative; z-index: 1; padding: 28px 0 60px; font-size: 15px; 
   function setLang(l) { lang = l === "en" ? "en" : "zh"; try { localStorage.setItem("site-lang", lang); } catch (e) {} render(); }
   document.getElementById("btn-zh").addEventListener("click", function () { setLang("zh"); });
   document.getElementById("btn-en").addEventListener("click", function () { setLang("en"); });
-  window.addEventListener("hashchange", function () { var h = location.hash.slice(1); if (h === "ops" || h === "admin") { cat = h; render(); } });
+  window.addEventListener("hashchange", function () { var h = location.hash.slice(1); if (CATS.indexOf(h) >= 0) { cat = h; render(); } });
 
-  var h = location.hash.slice(1); if (h === "ops" || h === "admin") cat = h;
+  var h = location.hash.slice(1); if (CATS.indexOf(h) >= 0) cat = h;
   var saved = null; try { saved = localStorage.getItem("site-lang"); } catch (e) {}
   lang = saved === "en" || saved === "zh" ? saved : (C.defaultLang === "en" ? "en" : "zh");
   render();

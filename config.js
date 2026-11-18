@@ -12,7 +12,7 @@
 window.SITE_CONFIG = {
   showMissing: false,
   defaultLang: "zh",          // 打開網站時預設語言："zh" 或 "en"
-  defaultCategory: "ops",     // 一進來先顯示的分類："ops" 營運 或 "admin" 行政文書
+  defaultCategory: "consult", // 一進來先顯示的分類："consult" 顧問、"ops" 營運、"admin" 行政文書
 
   /* ---------- 基本資料 ---------- */
   person: {
@@ -24,11 +24,11 @@ window.SITE_CONFIG = {
     portfolio: "",                   // 作品集網址，可留空
     linkedin:  "",                   // 主要給英文版用，可留空
     location:  { zh: "台北・可遠端", en: "Taipei, Taiwan (UTC+8) · Remote" },
-    role:      { zh: "產品工程師｜營運系統與流程自動化", en: "Product Engineer | Operations Systems & Workflow Automation" },
+    role:      { zh: "營運流程顧問・產品工程師", en: "Operations Consultant · Product Engineer" },
     tagline:   { zh: "沒有教，就自己去找答案。", en: "If no one teaches it, I go find the answer." },
     intro: {
-      zh: "8–9 年工作經驗，從第一線客服、門市、日商到事務所會計營運；現在把行政文書與營運流程做成系統。下面是我能承接的項目和實際做過的例子。",
-      en: "8–9 years of work, from front-line customer service, retail and a Japanese company to accounting and operations at a law firm. Now I turn admin paperwork and operations into systems. Below is what I can build, with real examples."
+      zh: "8–9 年工作經驗，從第一線客服、門市、日商到事務所會計營運。我先把現場的需求聽懂、把規則理清楚，再把它變成可以運作的架構與系統。",
+      en: "8–9 years of work, from front-line customer service, retail and a Japanese company to accounting and operations at a law firm. I listen to the front line, untangle the rules, then turn them into a structure and a system that works."
     }
   },
 
@@ -106,6 +106,47 @@ window.SITE_CONFIG = {
        demo: "line" 或 "annuity" → 顯示「實際操作」按鈕，可以直接操作範例
   */
   services: {
+    consult: {
+      title: { zh: "顧問（需求 → 架構）", en: "Consulting (needs → structure)" },
+      sub:   { zh: "訪談・藍圖・規則梳理・自動化邊界・方案與報價", en: "Interviews · blueprint · rules · automation limits · options and quotes" },
+      exp: {
+        zh: "有了 AI，寫程式變得很快；真正難的是決定要做什麼、規則怎麼定、哪裡該自動、哪裡該留給人。我做過客服、門市、業務助理和事務所營運，習慣先站在第一線把話聽完，再把散在對話裡的需求整理成資料、流程、畫面三層架構，最後才動手做。",
+        en: "AI makes writing code fast. The hard part is deciding what to build, what the rules are, and what should run on its own versus stay with people. Having worked in customer service, retail, sales support and law-firm operations, I listen to the front line first, sort scattered needs into three layers (data, process, screens), and only then build."
+      },
+      nums: [["12", { zh: "處流程衝突", en: "process conflicts" }], ["6", { zh: "份藍圖文件", en: "blueprint docs" }], ["3", { zh: "級自動化", en: "automation tiers" }]],
+      steps: [
+        { t: { zh: "聽第一線，找到真正的問題", en: "Listen to the front line and find the real problem" },
+          p: { zh: "客戶說的「功能」常常是解法，不是問題。先看紀錄、問現場，確認要解決的是什麼。", en: "What clients ask for is often a solution, not the problem. I read the records and ask the people on site first." },
+          ex: [{ zh: "業主想做「儲值制」減少學員取消。看完紀錄發現取消來自籌備中的課不確定、對品牌信任不足，儲值制解決不了；改提議「單堂專項課＋每月固定課表」，業主採用。", en: "The owner wanted prepaid credit to cut cancellations. The records showed cancellations came from uncertain classes and low trust, which prepaid credit would not fix; I proposed single-session clinics on a fixed monthly timetable, and the owner adopted it." },
+               { zh: "事務所的需求散在各部門前輩的經驗裡，逐一訪談後依部門切成工作台。", en: "At the law firm, requirements lived in colleagues' heads; after interviewing each team I split the system by department." }] },
+        { t: { zh: "先畫藍圖，再寫程式", en: "Blueprint before code" },
+          p: { zh: "資料、流程、畫面分三層，先定資料再談畫面；每一層標出「什麼時候要決定、之後改的代價」。", en: "Data, process and screens as three layers, data first; each layer marks when it must be decided and what a later change costs." },
+          ex: [{ zh: "拿到需求後 4 小時產出系統藍圖，附業主可以直接手寫的決策表，與 8 個角色 × 23 項資料的權限表。", en: "A system blueprint four hours after the brief, with a decision sheet the owner fills in by hand and a permission table of 8 roles × 23 data areas." },
+               { zh: "年費通知程式只綁欄位對應，新舊系統並行時換資料來源也不必改程式。", en: "The annuity-notice code binds only to field maps, so the data source can change during migration without a rewrite." }] },
+        { t: { zh: "把口頭規則變成可執行的規則", en: "Turn spoken rules into rules a system can run" },
+          p: { zh: "把散在群組和口頭約定的規則寫成清單，找出互相矛盾的地方，逐條和業主確認。", en: "Collect rules from chats and conversations, find where they contradict each other, and confirm each one with the owner." },
+          ex: [{ zh: "流程診斷找出 3 個互相衝突（例如付款期限晚於成班決定時間）和 9 個不一致，確認後改寫成可以在後台調整的設定值。", en: "A process review found 3 conflicts (such as a payment deadline later than the class decision) and 9 inconsistencies, rewritten as settings the admin can change." }] },
+        { t: { zh: "決定哪裡自動、哪裡留給人", en: "Decide what runs on its own and what stays with people" },
+          p: { zh: "不是全部自動化就好。依「有沒有錢流出、通知能不能收回、牽涉外部對象、需不需要例外判斷」分三級。", en: "Automating everything is not the goal. Three tiers, decided by whether money goes out, whether a message can be taken back, whether outsiders are involved and whether exceptions need judgment." },
+          tiers: [
+            { zh: "全自動", en: "Fully automatic", d: { zh: "提醒、名額遞補、報表", en: "Reminders, waitlist, reports" } },
+            { zh: "系統算好，人確認", en: "System prepares, person confirms", d: { zh: "成班決定、合併球面、費用結算", en: "Class decisions, court merges, payouts" } },
+            { zh: "人工判斷", en: "Human judgment", d: { zh: "入帳確認、退款例外、對外協調", en: "Deposit checks, refund exceptions, outside parties" } }
+          ],
+          ex: [{ zh: "入帳確認只留給看得到銀行帳戶的負責人；未成團時改報、抵用金或退款交給學員自己選。", en: "Deposit confirmation stays with the one person who sees the bank account; when a session is cancelled, students choose switch, credit or refund themselves." }] },
+        { t: { zh: "給選項，不只給答案", en: "Give options, not just an answer" },
+          p: { zh: "每個需求拆成 2～3 個方案，附工時、費用與利弊，讓業主依預算和風險選擇。", en: "Each request becomes two or three options with hours, cost and trade-offs, so the owner chooses by budget and risk." },
+          ex: [{ zh: "「朋友代報名」看似小功能：A 分享連結 3 小時、B 完整代報名 15.5 小時、B0 最小可行版 6.5 小時，附利弊表讓業主選。", en: "'Sign up a friend' looked small: A share link 3 h, B full proxy sign-up 15.5 h, B0 minimum version 6.5 h, with a trade-off table for the owner." }] },
+        { t: { zh: "分階段交付，量了再改", en: "Ship in stages, measure before changing" },
+          p: { zh: "藍圖 → 必要功能 → 進階功能分段驗收；要優化先量測，不把錢花在不是瓶頸的地方。", en: "Blueprint, must-haves, then extras, each signed off; measure before optimizing so money is not spent where the bottleneck is not." },
+          ex: [{ zh: "報名頁太慢時先記錄每次開啟的耗時，再提出兩個方案（小改 2～3 小時、換後端另報價），業主選了小改。", en: "When sign-up felt slow, I logged every open first, then offered two options (a 2–3 hour fix or a new backend quoted separately); the owner chose the fix." }] }
+      ],
+      deliverables: [
+        { zh: "需求說明書", en: "Requirements spec" }, { zh: "系統藍圖（三層）", en: "Three-layer blueprint" }, { zh: "資料模組規劃", en: "Data model plan" },
+        { zh: "權限表", en: "Permission table" }, { zh: "業主決策填寫表", en: "Owner decision sheet" }, { zh: "流程診斷報告", en: "Process review" },
+        { zh: "方案比較與報價", en: "Options and quotes" }, { zh: "營運成本評估", en: "Running-cost estimate" }, { zh: "操作手冊", en: "Manuals" }
+      ]
+    },
     ops: {
       title: { zh: "營運（SOP／系統）", en: "Operations (SOP / systems)" },
       sub:   { zh: "預約報名・LINE 官方帳號・排班回報・內部系統・數據", en: "Booking · LINE accounts · shifts · internal tools · data" },
