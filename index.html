@@ -190,6 +190,7 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
 </div>
 
 <script src="config.js"></script>
+<script src="line-demo.js"></script>
 <script>
 (function () {
   var C = window.SITE_CONFIG || {};
@@ -376,6 +377,15 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
 
     html += '<section class="panel"><h2>' + T("專案經歷", "Projects") + '<span class="en">projects</span></h2>' + project(firm) + project(pb) + "</section>";
 
+    /* ---------- LINE demo ---------- */
+    if (window.LineDemo) {
+      html += '<section class="panel"><h2>' + T("LINE 操作示範", "LINE demo") + '<span class="en">interactive</span></h2>' +
+        '<p style="margin:-6px 0 20px;color:var(--muted);max-width:62ch">' + T(
+          "匹克球系統的三個 LINE 官方帳號：學員、場主、教練。可以直接點圖文選單操作，也可以觸發系統的自動通知。",
+          "The three LINE official accounts in the pickleball system: students, venue hosts and coaches. Tap the rich menu, or fire the automatic messages.") +
+        '</p><div id="line-demo"></div></section>';
+    }
+
     /* ---------- screenshots ---------- */
     var shots = (C.screenshots || []).filter(function (s) { return s && s.src; });
     if (shots.length) {
@@ -436,6 +446,8 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
         missing.map(function (m) { return "<li>" + esc(m.label) + " <code>" + esc(m.path) + "</code></li>"; }).join("") + "</ol></div>" + html;
     }
     document.getElementById("app").innerHTML = html;
+    var ld = document.getElementById("line-demo");
+    if (ld && window.LineDemo) window.LineDemo.mount(ld, lang);
   }
 
   function setLang(l) {

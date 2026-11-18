@@ -11,7 +11,7 @@
    ========================================================= */
 
 window.SITE_CONFIG = {
-  showMissing: Flase,
+  showMissing: true,
   defaultLang: "zh",          // 打開網站時預設語言："zh" 或 "en"
 
   /* ---------- 基本資料 ---------- */
@@ -73,6 +73,9 @@ window.SITE_CONFIG = {
     { src: "images/signup.png", caption: { zh: "學員報名頁（LINE）", en: "Student sign-up (LINE)" } },
     { src: "images/host.png",   caption: { zh: "場主排班與收班回報（LINE）", en: "Venue host shift and cash report (LINE)" } },
     { src: "images/notice.png", caption: { zh: "專利年費通知・客戶線上回覆", en: "Patent annuity notice, client reply page" } },
+    { src: "images/line-student.png", caption: { zh: "學員帳號：圖文選單＋明日提醒", en: "Student account: rich menu and day-before reminder" } },
+    { src: "images/line-notices.png", caption: { zh: "學員帳號：遞補、成班、未成團通知", en: "Student account: waitlist, class and cancellation notices" } },
+    { src: "images/line-host.png",    caption: { zh: "場主帳號：排班提醒與付款確認", en: "Host account: shift reminder and payment check" } },
     { src: "images/admin.png",  caption: { zh: "內部營運網頁・待處理", en: "Internal operations web app, to-do queue" }, wide: true }
   ],
 
