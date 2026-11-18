@@ -16,9 +16,9 @@ window.SITE_CONFIG = {
 
   /* ---------- 基本資料 ---------- */
   person: {
-    name:      { zh: "", en: "" },   // 例：{ zh: "王小明", en: "Hsiao-Ming Wang" }
-    email:     "",
-    phone:     "",                   // 只會出現在中文版；不想公開就留空
+    name:      { zh: "歐瀞璞", en: "OU JING PU" },   // 例：{ zh: "王小明", en: "Hsiao-Ming Wang" }
+    email:     "inforest.2347@gmail.com",
+    phone:     "0972802829",                   // 只會出現在中文版；不想公開就留空
     github:    "",                   // 完整網址，例 https://github.com/xxx
     portfolio: "",                   // 作品集網址，可留空
     linkedin:  "",                   // 主要給英文版用
@@ -29,10 +29,10 @@ window.SITE_CONFIG = {
   firm: {
     // 不想公開事務所名稱就留空，網站會顯示「某智慧財產權事務所」
     name:      { zh: "", en: "" },
-    start:     { zh: "", en: "" },   // 到職年月，例 { zh: "2022 年 3 月", en: "Mar 2022" }
-    users:     "",                   // ERP 每天使用人數，例 "25"
+    start:     { zh: "2022/03", en: "Mar 2022" },   // 到職年月，例 { zh: "2022 年 3 月", en: "Mar 2022" }
+    users:     "10",                   // ERP 每天使用人數，例 "25"
     volume:    { zh: "", en: "" },   // 每月處理量，例 { zh: "約 300 筆發票", en: "about 300 invoices" }
-    saved:     { zh: "", en: "" },   // 自動化省下的時間或減少的錯誤，例 { zh: "每月省下約 40 小時人工", en: "about 40 staff hours saved a month" }
+    saved:     { zh: "每月省下約 40 小時人工", en: "about 40 staff hours saved a month" },   // 自動化省下的時間或減少的錯誤，例 { zh: "每月省下約 40 小時人工", en: "about 40 staff hours saved a month" }
     // 年費通知原本的做法（請確認或改寫）
     beforeNotice: { zh: "Email 往返確認", en: "back-and-forth email" },
     // 英文版案例開頭的背景描述（請確認是否符合實際）
@@ -46,9 +46,9 @@ window.SITE_CONFIG = {
   pickleball: {
     // 需先取得業主同意才填；留空會顯示「匹克球教學與球敘新創」
     clientName: { zh: "", en: "" },
-    students:   "",                  // 系統內學員數，例 "380"
-    signups:    "",                  // 每月報名筆數，例 "600"
-    reconcile:  { zh: "", en: "" },  // 對帳時間的改善，例 { zh: "對帳從每週半天縮短到 30 分鐘", en: "weekly reconciliation cut from half a day to 30 minutes" }
+    students:   "380",                  // 系統內學員數，例 "380"
+    signups:    "600",                  // 每月報名筆數，例 "600"
+    reconcile:  { zh: "對帳從每週半天縮短到 30 分鐘", en: "weekly reconciliation cut from half a day to 30 minutes" },  // 對帳時間的改善，例 { zh: "對帳從每週半天縮短到 30 分鐘", en: "weekly reconciliation cut from half a day to 30 minutes" }
     // 案例開頭的背景描述（請確認是否符合實際）
     before: {
       zh: "客戶原本透過第三方 App 收報名，付款靠人工逐筆追蹤。",
@@ -60,9 +60,9 @@ window.SITE_CONFIG = {
 
   /* ---------- 學歷與語言 ---------- */
   education: {
-    school:  { zh: "", en: "" },     // 例 { zh: "國立○○大學", en: "National ○○ University" }
-    year:    "",                     // 畢業年份，例 "2017"
-    english: { zh: "", en: "" }      // 例 { zh: "多益 850", en: "Professional working proficiency" }
+    school:  { zh: "國立高雄師範大學", en: "National Kaohsiung Normal University" },     // 例 { zh: "國立○○大學", en: "National ○○ University" }
+    year:    "2017",                     // 畢業年份，例 "2017"
+    english: { zh: "多益 850", en: "Professional working proficiency" }      // 例 { zh: "多益 850", en: "Professional working proficiency" }
   },
 
   /* ---------- 系統截圖（去除個資後再放） ----------
