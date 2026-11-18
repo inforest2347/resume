@@ -11,7 +11,7 @@
    ========================================================= */
 
 window.SITE_CONFIG = {
-  showMissing: true,
+  showMissing: false,
   defaultLang: "zh",          // 打開網站時預設語言："zh" 或 "en"
 
   /* ---------- 基本資料 ---------- */
@@ -70,13 +70,30 @@ window.SITE_CONFIG = {
 
   /* ---------- 系統截圖（示意畫面，資料皆為虛構） ---------- */
   screenshots: [
-    { src: "images/signup.png", caption: { zh: "學員報名頁（LINE）", en: "Student sign-up (LINE)" } },
-    { src: "images/host.png",   caption: { zh: "場主排班與收班回報（LINE）", en: "Venue host shift and cash report (LINE)" } },
-    { src: "images/notice.png", caption: { zh: "專利年費通知・客戶線上回覆", en: "Patent annuity notice, client reply page" } },
-    { src: "images/line-student.png", caption: { zh: "學員帳號：圖文選單＋明日提醒", en: "Student account: rich menu and day-before reminder" } },
-    { src: "images/line-notices.png", caption: { zh: "學員帳號：遞補、成班、未成團通知", en: "Student account: waitlist, class and cancellation notices" } },
-    { src: "images/line-host.png",    caption: { zh: "場主帳號：排班提醒與付款確認", en: "Host account: shift reminder and payment check" } },
-    { src: "images/admin.png",  caption: { zh: "內部營運網頁・待處理", en: "Internal operations web app, to-do queue" }, wide: true }
+    { src: "images/line-student.png", caption: { zh: "學員帳號：圖文選單＋明日提醒", en: "Student account: rich menu and day-before reminder" },
+      desc: { zh: "學員在 LINE 裡完成報名、付款回報、請假與簽到；前一晚自動收到行程、球面與付款狀態。", en: "Students book, report payments, take leave and check in inside LINE, and get their schedule, court and payment status the night before." },
+      caps: ["LINE 串接設定", "LINE 機器人", "LINE 推播", "LINE 登入", "線上預約"] },
+    { src: "images/line-notices.png", caption: { zh: "學員帳號：遞補、成班、未成團通知", en: "Student account: waitlist, class and cancellation notices" },
+      desc: { zh: "候補遞補、成班決定、未成團三選一都會自動通知；未成團時學員直接在訊息裡選改報、抵用金或退款。", en: "Waitlist promotion, class decisions and cancellations are sent automatically; students choose switch, credit or refund right in the message." },
+      caps: ["LINE 推播", "預約系統", "儲值金"] },
+    { src: "images/signup.png", caption: { zh: "學員報名頁（LINE）", en: "Student sign-up (LINE)" },
+      desc: { zh: "依據點顯示期制課、專項課與球敘；即時顯示剩餘名額、成班門檻，可加報家人、租借球拍。", en: "Classes and sessions by venue, with live seats, minimum headcount, family sign-ups and racket rental." },
+      caps: ["預約系統", "線上預約", "會員系統", "庫存"] },
+    { src: "images/host.png", caption: { zh: "場主排班與收班回報（LINE）", en: "Venue host shift and cash report (LINE)" },
+      desc: { zh: "場主看到每一面的人數與付款狀態，現場點名；收班時回報名單外收入，系統自動算出應交金額。", en: "Hosts see headcount and payment status per court, take roll, and report walk-in cash; the amount due is calculated for them." },
+      caps: ["排班", "打卡", "金流", "庫存"] },
+    { src: "images/line-host.png", caption: { zh: "場主帳號：排班提醒與付款確認", en: "Host account: shift reminder and payment check" },
+      desc: { zh: "前一晚推送排班與人數；主理人每天定時收到待確認的付款回報，按一下就完成對帳。", en: "Shift details the night before; the owner gets pending payment reports at set times and confirms them in one tap." },
+      caps: ["LINE 推播", "排班", "金流"] },
+    { src: "images/line-report.png", caption: { zh: "場主帳號：收班回報", en: "Host account: end-of-session report" },
+      desc: { zh: "名單外人數、實收現金與臨時租拍填完即送出，應交金額即時計算，少收的差額自動列為未收。", en: "Walk-ins, cash and rentals in one form; the amount due updates live and any shortfall is tracked as unpaid." },
+      caps: ["金流", "報表", "庫存"] },
+    { src: "images/notice.png", caption: { zh: "專利年費通知・客戶線上回覆", en: "Patent annuity notice, client reply page" },
+      desc: { zh: "事務所客戶透過專屬連結回覆委辦或放棄，結果自動回寫案件，取代來回的 Email 與人工登打。", en: "Law-firm clients answer through a private link; replies write back to the case records, replacing email back-and-forth and re-keying." },
+      caps: ["一頁式網頁", "企業內部系統", "社內文書自動產生（請款單、通知書、對帳文件）"] },
+    { src: "images/admin.png", caption: { zh: "內部營運網頁・待處理", en: "Internal operations web app, to-do queue" }, wide: true,
+      desc: { zh: "營運人員每天從待處理開始：需要人判斷的事項依嚴重度排序，系統健康檢查也在這裡。", en: "Staff start each day from the to-do queue: items that need a person, sorted by urgency, plus system health checks." },
+      caps: ["管理後台", "企業內部系統", "報表", "系統健康檢查與異常通知"] }
   ],
 
   /* ---------- 可承接項目對照（依市面常見接案項目整理） ----------

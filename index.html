@@ -8,19 +8,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* Layout: grey board with white panels, like the printed résumé; yellow discs as the personal mark.
-   Each project = problem pills → three numbered pillars → outcome under each pillar. */
+/* Layout: grey board, white panels, yellow discs as the personal mark.
+   Hero → tab bar (demo first) → active tab → About → contact. Side columns list matching services. */
 :root {
   --board: #ececec;
   --panel: #ffffff;
-  --well: #dcdcdc;
+  --well: #e0e0e0;
   --ink: #1e1f22;
-  --muted: #5f636a;
+  --muted: #565a61;
   --line: #cfcfcf;
   --sun: #f7d774;
-  --sun-ink: #5a4500;
+  --on-sun: #1e1f22;
   --ok: #2f8f57;
-  --part: #c98a12;
+  --part: #b87a00;
   --plan: #3a73b5;
   --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
@@ -28,68 +28,81 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --board: #15171a; --panel: #1f2226; --well: #2a2e33; --ink: #ecedef; --muted: #a3a8b0;
-    --line: #363b41; --sun: #e9c45a; --sun-ink: #2a2000; --ok: #5cc286; --part: #e3a83a; --plan: #78a9e6;
+    --board: #15171a; --panel: #1f2226; --well: #2a2e33; --ink: #ecedef; --muted: #b0b5bc;
+    --line: #3a3f46; --sun: #e9c45a; --on-sun: #1e1f22; --ok: #5cc286; --part: #e3a83a; --plan: #78a9e6;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --board: #15171a; --panel: #1f2226; --well: #2a2e33; --ink: #ecedef; --muted: #a3a8b0;
-  --line: #363b41; --sun: #e9c45a; --sun-ink: #2a2000; --ok: #5cc286; --part: #e3a83a; --plan: #78a9e6;
+  --board: #15171a; --panel: #1f2226; --well: #2a2e33; --ink: #ecedef; --muted: #b0b5bc;
+  --line: #3a3f46; --sun: #e9c45a; --on-sun: #1e1f22; --ok: #5cc286; --part: #e3a83a; --plan: #78a9e6;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
-body { background: var(--board); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+body { background: var(--board); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.75; overflow-x: hidden; }
 a { color: inherit; text-decoration-color: var(--sun); text-decoration-thickness: 3px; text-underline-offset: 3px; }
 a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
-.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; position: relative; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; position: relative; }
 .disc { position: absolute; border-radius: 50%; background: var(--sun); z-index: 0; pointer-events: none; }
+.err { background: #fde3df; color: #7a1d12; border-radius: 6px; padding: 12px 16px; margin: 12px 0; font-size: 14px; position: relative; z-index: 2; }
 
 /* top bar */
-.bar { position: relative; z-index: 1; display: flex; justify-content: flex-end; padding: 18px 0; }
+.bar { position: relative; z-index: 1; display: flex; justify-content: flex-end; padding: 16px 0 0; }
 .lang { display: flex; background: var(--panel); border-radius: 999px; padding: 3px; }
 .lang button { font: inherit; font-size: 13px; border: 0; background: transparent; color: var(--muted); padding: 3px 14px; border-radius: 999px; cursor: pointer; }
 .lang button[aria-pressed="true"] { background: var(--ink); color: var(--board); }
 
 /* hero */
-.hero { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; padding: 40px 0 28px; }
-.hero h1 { font-size: clamp(34px, 5vw, 50px); font-weight: 900; line-height: 1.15; margin: 0; text-wrap: balance; }
+.hero { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 24px; padding: 24px 0 24px; align-items: end; }
+.hero h1 { font-size: clamp(34px, 5vw, 48px); font-weight: 900; line-height: 1.15; margin: 0; text-wrap: balance; }
 .hero h1 small { font-size: .4em; font-weight: 500; color: var(--muted); margin-left: 10px; }
-.hero .role { font-size: 18px; font-weight: 700; margin: 10px 0 0; }
-.hero .role span { background: linear-gradient(transparent 60%, var(--sun) 60%); }
-.hero .tag { font-size: 20px; margin: 22px 0 0; }
-.hero .intro { color: var(--muted); margin: 12px 0 0; max-width: 46ch; }
-.contact { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 18px; font-size: 14px; }
-.facts { background: var(--panel); border-radius: 4px; padding: 20px 22px; align-self: end; display: grid; gap: 12px; font-size: 15px; }
-.facts div { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; }
+.role { display: inline-block; margin: 12px 0 0; font-size: 17px; font-weight: 700; background: var(--sun); color: var(--on-sun); padding: 2px 12px; border-radius: 4px; }
+.hero .tag { font-size: 19px; margin: 18px 0 0; font-weight: 500; }
+.hero .intro { color: var(--muted); margin: 8px 0 0; max-width: 46ch; }
+.contact { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 14px; font-size: 14px; }
+.facts { background: var(--panel); border-radius: 6px; padding: 18px 20px; display: grid; gap: 10px; font-size: 14.5px; margin: 0; }
+.facts div { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; }
 .facts dt { color: var(--muted); font-size: 13px; padding-top: 2px; }
 .facts dd { margin: 0; }
 
-section { position: relative; z-index: 1; margin: 18px 0; }
-.panel { background: var(--panel); border-radius: 4px; padding: 26px 28px; }
-h2 { font-size: 22px; font-weight: 900; margin: 0 0 18px; text-wrap: balance; }
-h2 .en { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--muted); margin-left: 10px; letter-spacing: .08em; text-transform: uppercase; }
-h3 { font-size: 20px; margin: 0; text-wrap: balance; }
+/* tabs */
+.tabs { position: sticky; top: 0; z-index: 5; display: flex; gap: 4px; background: var(--board); padding: 10px 0; overflow-x: auto; }
+.tabs a { flex: none; text-decoration: none; font-size: 15px; font-weight: 700; padding: 8px 18px; border-radius: 999px; color: var(--muted); background: var(--panel); border: 1px solid var(--line); }
+.tabs a:hover { color: var(--ink); border-color: var(--ink); }
+.tabs a[aria-selected="true"] { background: var(--ink); color: var(--board); border-color: var(--ink); }
+.tabs a small { font-weight: 500; font-size: 12px; margin-left: 4px; opacity: .8; }
 
-/* about */
-.about { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.about div { border-top: 3px solid var(--sun); padding-top: 10px; }
-.about b { display: block; margin-bottom: 4px; }
-.about p { margin: 0; color: var(--muted); font-size: 15px; }
+section { position: relative; z-index: 1; margin: 10px 0 18px; }
+.panel { background: var(--panel); border-radius: 6px; padding: 26px 28px; }
+h2 { font-size: 22px; font-weight: 900; margin: 0 0 6px; text-wrap: balance; }
+h2 .en { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--muted); margin-left: 10px; letter-spacing: .08em; text-transform: uppercase; }
+.sub { margin: 0 0 22px; color: var(--muted); max-width: 64ch; }
+h3 { font-size: 19px; margin: 0; text-wrap: balance; }
+
+/* capability chips (side lists) */
+.side-caps { display: grid; gap: 6px; align-content: start; }
+.side-caps h4 { margin: 0 0 2px; font-size: 12px; color: var(--muted); font-weight: 500; letter-spacing: .06em; }
+.cchip { display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 1.4; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+.cchip small { color: var(--muted); font-size: 12px; margin-left: auto; white-space: nowrap; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+.dot.done { background: var(--ok); }
+.dot.partial { background: var(--part); }
+.dot.plan { background: transparent; border: 2px solid var(--plan); }
+.dot.no { background: transparent; border: 1.5px dashed var(--muted); }
 
 /* project infographic */
-.proj { background: var(--well); border-radius: 4px; padding: 24px; }
+.proj { background: var(--well); border-radius: 6px; padding: 24px; }
 .proj + .proj { margin-top: 18px; }
 .proj-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
 .proj-head .meta { font-size: 13px; color: var(--muted); }
-.title-box { background: var(--panel); display: inline-block; padding: 6px 16px; border-radius: 2px; }
+.title-box { background: var(--panel); display: inline-block; padding: 6px 16px; border-radius: 3px; }
 .pains { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 22px 0 16px; }
 .pain { background: var(--panel); border-radius: 999px; padding: 12px 22px; font-size: 14px; text-align: center; display: flex; align-items: center; justify-content: center; min-height: 72px; }
 .pain span { text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 4px; }
 .pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .pillar { display: grid; grid-template-rows: 1fr auto auto; }
-.pillar .box { background: var(--panel); padding: 16px 18px; border-radius: 2px; }
+.pillar .box { background: var(--panel); padding: 16px 18px; border-radius: 3px; }
 .pillar .hd { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; }
 .pillar .num { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--ink); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 13px; flex: none; }
 .pillar .hd small { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: .06em; }
@@ -101,74 +114,78 @@ h3 { font-size: 20px; margin: 0; text-wrap: balance; }
 .stem { width: 1px; height: 20px; background: var(--ink); justify-self: center; }
 .result { text-align: center; font-weight: 700; font-size: 15px; line-height: 1.5; padding: 4px 6px 0; text-wrap: balance; }
 .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 0; padding: 0; list-style: none; }
-.stats li { background: var(--panel); border-radius: 2px; padding: 8px 14px; min-width: 110px; }
+.stats li { background: var(--panel); border-radius: 3px; padding: 8px 14px; min-width: 110px; }
 .stats b { display: block; font-family: var(--font-mono); font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.2; }
 .stats span { font-size: 12px; color: var(--muted); }
 .stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-.stack span { font-family: var(--font-mono); font-size: 12px; background: var(--panel); border-radius: 2px; padding: 1px 8px; color: var(--muted); }
-details { margin-top: 16px; background: var(--panel); border-radius: 2px; padding: 10px 16px; font-size: 15px; }
+.stack span { font-family: var(--font-mono); font-size: 12px; background: var(--panel); border-radius: 3px; padding: 1px 8px; color: var(--muted); }
+details { margin-top: 16px; background: var(--panel); border-radius: 3px; padding: 10px 16px; font-size: 15px; }
 summary { cursor: pointer; font-weight: 700; }
 details ul { margin: 10px 0 4px; padding-left: 1.2em; display: grid; gap: 4px; }
 blockquote { margin: 16px 0 0; padding: 12px 16px; border-left: 4px solid var(--sun); background: var(--panel); }
 blockquote footer { font-size: 13px; color: var(--muted); margin-top: 6px; }
 
-/* screenshots */
-.shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.shots figure { margin: 0; }
-.shots figure.wide { grid-column: 1 / -1; }
-.shots img { width: 100%; height: auto; display: block; border-radius: 4px; background: var(--well); }
-.shots figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+/* screens */
+.shot { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; padding: 22px 0; border-top: 1px solid var(--line); align-items: start; }
+.shot:first-of-type { border-top: 0; padding-top: 4px; }
+.shot .img { background: var(--well); border-radius: 6px; padding: 16px; display: flex; justify-content: center; }
+.shot img { max-width: 100%; height: auto; display: block; border-radius: 4px; }
+.shot.phone img { max-width: 340px; }
+.shot h3 { font-size: 17px; margin-bottom: 6px; }
+.shot p { margin: 0 0 14px; font-size: 14.5px; color: var(--muted); }
 .fine { font-size: 12px; color: var(--muted); margin: 12px 0 0; }
 
-/* capabilities */
-.cap-sum { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; margin: -6px 0 18px; }
+/* capabilities grid */
+.cap-sum { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; margin: 0 0 18px; }
 .cap-sum span { display: inline-flex; align-items: center; gap: 6px; }
-.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
-.dot.done { background: var(--ok); }
-.dot.partial { background: var(--part); }
-.dot.plan { background: transparent; border: 2px solid var(--plan); }
-.dot.no { background: transparent; border: 1.5px dashed var(--muted); }
 .cap-group + .cap-group { margin-top: 20px; }
 .cap-group h4 { font-size: 13px; color: var(--muted); font-weight: 500; margin: 0 0 8px; letter-spacing: .04em; }
 .caps { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
-.cap { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; }
+.cap { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; }
 .cap .dot { margin-top: 7px; }
 .cap b { font-size: 15px; display: block; line-height: 1.4; }
 .cap span { font-size: 12.5px; color: var(--muted); line-height: 1.5; display: block; margin-top: 2px; }
-.cap.no { opacity: .55; }
+.cap.no { opacity: .6; }
 .extras { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; padding: 0; list-style: none; }
-.extras li { background: var(--sun); color: var(--sun-ink); border-radius: 999px; padding: 4px 12px; font-size: 13.5px; }
+.extras li { background: var(--sun); color: var(--on-sun); border-radius: 999px; padding: 4px 12px; font-size: 13.5px; }
 
-/* skills */
+/* about */
+.about-block { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 28px; padding: 24px 0; border-top: 1px solid var(--line); }
+.about-block:first-of-type { border-top: 0; padding-top: 6px; }
+.about-block .lead { font-size: 17px; font-weight: 500; margin: 6px 0 12px; max-width: 60ch; }
+.about-block ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.about-block li { display: grid; grid-template-columns: 6px minmax(0, 1fr); gap: 12px; }
+.about-block li::before { content: ""; width: 6px; border-radius: 3px; background: var(--sun); }
+.about-block li b { display: block; }
+.about-block li span { color: var(--muted); font-size: 15px; }
 .skills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-.skill { background: var(--well); border-radius: 4px; padding: 16px; }
-.skill .hd { background: var(--panel); padding: 8px 12px; margin-bottom: 10px; border-radius: 2px; }
+.skill { background: var(--well); border-radius: 6px; padding: 16px; }
+.skill .hd { background: var(--panel); padding: 8px 12px; margin-bottom: 10px; border-radius: 3px; }
 .skill .hd b { display: block; font-size: 16px; }
 .skill .hd span { font-size: 12px; color: var(--muted); }
-
-/* timeline */
 .timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .timeline li { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .timeline li:last-child { border-bottom: 0; padding-bottom: 0; }
 .timeline .when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 2px; }
 .timeline .what b { display: block; }
 .timeline .what span { color: var(--muted); font-size: 15px; }
+.h-sub { font-size: 16px; margin: 26px 0 12px; }
 
-footer.site { position: relative; z-index: 1; padding: 24px 0 56px; font-size: 14px; color: var(--muted); }
+footer.site { position: relative; z-index: 1; padding: 16px 0 56px; font-size: 15px; }
 
-mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; padding: 0 5px; font-size: .9em; outline: 1px dashed var(--sun-ink); outline-offset: -1px; }
-.todo-panel { position: relative; z-index: 1; background: var(--panel); border: 2px dashed var(--part); border-radius: 4px; padding: 14px 18px; font-size: 14px; margin-bottom: 10px; }
+mark.todo { background: var(--sun); color: var(--on-sun); border-radius: 3px; padding: 0 5px; font-size: .9em; outline: 1px dashed var(--on-sun); outline-offset: -1px; }
+.todo-panel { position: relative; z-index: 1; background: var(--panel); border: 2px dashed var(--part); border-radius: 6px; padding: 14px 18px; font-size: 14px; margin-bottom: 10px; }
 .todo-panel strong { display: block; margin-bottom: 6px; }
 .todo-panel ol { margin: 0; padding-left: 1.4em; columns: 3; column-gap: 24px; }
 .todo-panel code { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .shot, .about-block { grid-template-columns: 1fr; gap: 14px; }
   .todo-panel ol { columns: 2; }
 }
 @media (max-width: 680px) {
-  .hero, .about, .pains, .pillars, .shots { grid-template-columns: 1fr; }
-  .skills { grid-template-columns: 1fr; }
+  .hero, .pains, .pillars, .skills { grid-template-columns: 1fr; }
   .pain { border-radius: 14px; min-height: 0; }
   .timeline li { grid-template-columns: 1fr; gap: 2px; }
   .panel, .proj { padding: 18px; }
@@ -178,8 +195,8 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
 </head>
 <body>
 <div class="wrap">
-  <span class="disc" style="width:260px;height:260px;left:-130px;top:-110px"></span>
-  <span class="disc" style="width:200px;height:200px;right:-60px;top:280px"></span>
+  <span class="disc" style="width:240px;height:240px;left:-130px;top:-120px"></span>
+  <span class="disc" style="width:170px;height:170px;right:-70px;top:150px"></span>
   <header class="bar">
     <div class="lang" role="group" aria-label="Language">
       <button type="button" id="btn-zh">中文</button>
@@ -189,13 +206,19 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
   <main id="app"></main>
 </div>
 
+<!-- 讓 config.js 裡寫成 False／True（大寫）也能運作 -->
+<script>var False = false, True = true;</script>
 <script src="config.js"></script>
 <script src="line-demo.js"></script>
 <script>
 (function () {
-  var C = window.SITE_CONFIG || {};
-  var SHOW = C.showMissing !== false;
+  var C = window.SITE_CONFIG;
+  var BROKEN = !C;
+  C = C || {};
+  var SHOW = C.showMissing === true;
   var lang = "zh";
+  var TABS = ["demo", "projects", "screens", "services"];
+  var tab = "demo";
   var missing = [];
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -203,7 +226,6 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
   function get(path) { return pick(path.split(".").reduce(function (o, k) { return o == null ? undefined : o[k]; }, C)); }
   function note(path, label) { if (!missing.some(function (m) { return m.path === path; })) missing.push({ path: path, label: label }); }
   function todo(label) { return '<mark class="todo">' + esc(label) + "</mark>"; }
-  // value, or (preview) a yellow marker, or (live) fallback / nothing
   function v(path, label, fallback, pre, post) {
     pre = pre || ""; post = post || "";
     var x = get(path);
@@ -215,6 +237,21 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
   function T(zh, en) { return lang === "en" ? en : zh; }
   function list(a, cls) { return "<ul" + (cls ? ' class="' + cls + '"' : "") + ">" + a.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>"; }
 
+  /* ---------- capabilities lookup ---------- */
+  var LBL = function () { return { done: T("已做過", "Built"), partial: T("部分", "Partly"), plan: T("規劃中", "Planned"), no: T("未做過", "Not yet") }; };
+  function findCap(zh) {
+    var c = (C.capabilities || []).filter(function (x) { return x.name && x.name.zh === zh; })[0];
+    if (c) return { name: pick(c.name), status: c.status };
+    var e = (C.extras || []).filter(function (x) { return x.zh === zh; })[0];
+    if (e) return { name: pick(e), status: "done" };
+    return { name: zh, status: "done" };
+  }
+  function sideCaps(names, title) {
+    var L = LBL();
+    return '<div class="side-caps"><h4>' + (title || T("對應的承接項目", "Related services")) + "</h4>" +
+      names.map(function (n) { var c = findCap(n); return '<div class="cchip"><span class="dot ' + c.status + '"></span>' + esc(c.name) + "<small>" + L[c.status] + "</small></div>"; }).join("") + "</div>";
+  }
+
   /* ---------- project infographic ---------- */
   function project(p) {
     return '<article class="proj">' +
@@ -224,84 +261,20 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
         return '<div class="pillar"><div class="box"><div class="hd"><span class="num">' + (i + 1) + "</span>" + q.t + " <small>" + q.en + "</small></div>" +
           list(q.items, "tree") + '</div><span class="stem"></span><div class="result">' + q.r + "</div></div>";
       }).join("") + "</div>" +
-      (p.stats ? '<ul class="stats">' + p.stats.map(function (s) { return "<li><b>" + s[0] + "</b><span>" + s[1] + "</span></li>"; }).join("") + "</ul>" : "") +
+      (p.stats.length ? '<ul class="stats">' + p.stats.map(function (s) { return "<li><b>" + s[0] + "</b><span>" + s[1] + "</span></li>"; }).join("") + "</ul>" : "") +
       '<div class="stack">' + p.stack.map(function (s) { return "<span>" + s + "</span>"; }).join("") + "</div>" +
       "<details><summary>" + T("詳細內容", "Details") + "</summary>" + list(p.details) + "</details>" +
       (p.extra || "") + "</article>";
   }
 
-  function render() {
-    missing = [];
-    document.documentElement.lang = lang === "en" ? "en" : "zh-Hant";
-    document.getElementById("btn-zh").setAttribute("aria-pressed", String(lang === "zh"));
-    document.getElementById("btn-en").setAttribute("aria-pressed", String(lang === "en"));
-
-    var name = get("person.name");
-    if (!name) note("person.name", T("姓名", "Name"));
-    var nick = get("person.nickname");
-    document.title = (name || "") + T("｜產品工程師", " | Product Engineer");
-
-    /* contact */
-    var email = get("person.email"), phone = get("person.phone"), links = [];
-    links.push("<span>" + esc(get("person.location")) + "</span>");
-    if (email) links.push('<a href="mailto:' + esc(email) + '">' + esc(email) + "</a>");
-    else { note("person.email", "Email"); if (SHOW) links.push(todo("Email")); }
-    if (lang === "zh") {
-      if (phone) links.push("<span>" + esc(phone) + "</span>");
-      else { note("person.phone", "電話（可留空）"); if (SHOW) links.push(todo("電話（可留空）")); }
-    }
-    [["person.github", "GitHub"], ["person.portfolio", T("作品集", "Portfolio")], ["person.linkedin", "LinkedIn"]].forEach(function (p) {
-      var u = get(p[0]);
-      if (u) links.push('<a href="' + esc(u) + '">' + p[1] + "</a>");
-      else if (!(lang === "zh" && p[0] === "person.linkedin")) { note(p[0], p[1] + T("（可留空）", " (optional)")); if (SHOW) links.push(todo(p[1])); }
-    });
-
-    var langs = (C.languages || []).map(pick).filter(Boolean);
-    var school = v("education.school", T("學校名稱", "University"));
-    var firmName = v("firm.name", T("事務所名稱（可不公開）", "Firm name (optional)"), T("智財法律事務所", "IP law firm"));
-    var client = v("pickleball.clientName", T("客戶名稱（需業主同意）", "Client name (needs consent)"), T("匹克球教學與球敘新創", "a pickleball coaching startup"));
-    var years = get("person.years");
-
-    var html = "";
-
-    /* ---------- hero ---------- */
-    html += '<section class="hero"><div>' +
-      "<h1>" + (name ? esc(name) : (SHOW ? todo(T("姓名", "Your name")) : "")) + (nick && lang === "zh" ? "<small>（" + esc(nick) + "）</small>" : "") + "</h1>" +
-      '<p class="role"><span>' + T("產品工程師｜營運系統與流程自動化", "Product Engineer | Operations Systems &amp; Workflow Automation") + "</span></p>" +
-      '<p class="tag">「' + esc(get("person.tagline")) + "」</p>" +
-      '<p class="intro">' + T(
-        "喜歡挑戰、熱愛嘗試新事物。不僵化思考，總有更好的解決方案；不流於習慣，持續優化現有的工作流程。",
-        "I like a challenge and new tools. There is usually a better way, so I keep reworking the processes people have stopped questioning.") + "</p>" +
-      '<div class="contact">' + links.join("") + "</div></div>" +
-      '<dl class="facts">' +
-        "<div><dt>" + T("經驗", "Experience") + "</dt><dd>" + (years ? T(esc(years) + " 年工作經驗，多數時間遠端", esc(years) + " years of work, mostly remote") : "") + "</dd></div>" +
-        "<div><dt>" + T("現職", "Now") + "</dt><dd>" + firmName + T("・", ", ") + esc(get("firm.title")) + "<br>" + T("獨立接案・產品工程師", "Freelance product engineer") + "</dd></div>" +
-        "<div><dt>" + T("學歷", "Education") + "</dt><dd>" + school + "</dd></div>" +
-        "<div><dt>" + T("語言", "Languages") + "</dt><dd>" + langs.map(esc).join("<br>") + "</dd></div>" +
-      "</dl></section>";
-
-    /* ---------- about ---------- */
-    var about = lang === "en" ? [
-      ["Front-line background", "Bilingual customer service, retail and sales support in Japanese and English. Years of cross-team admin work help me spot process pain points that pure engineers miss."],
-      ["At home in Google tools", "Spreadsheets as the database, AppSheet for front and back end, Apps Script written with AI for what low-code can't do."],
-      ["Works with AI daily", "Mostly Claude. I have built my own MCP server and a text RPG game with it."]
-    ] : [
-      ["第一線出身", "做過日英文客服、門市與業務助理，多年跨部門溝通與行政經驗，讓我比純技術人員更容易抓到流程痛點。"],
-      ["熟悉 Google 生態", "以 Spreadsheets 當資料庫、AppSheet 搭建前後端，並用 Vibe coding 撰寫 GAS 補足功能。"],
-      ["日常與 AI 協作", "主要使用 Claude，撰寫過符合自己需求的 MCP，也做過文字 RPG 遊戲。"]
-    ];
-    html += '<section class="panel"><h2>' + T("關於我", "About") + '<span class="en">about</span></h2><div class="about">' +
-      about.map(function (a) { return "<div><b>" + a[0] + "</b><p>" + a[1] + "</p></div>"; }).join("") + "</div></section>";
-
-    /* ---------- projects ---------- */
+  function tabProjects(firmName, client) {
     var stu = get("pickleball.students"), sig = get("pickleball.signups");
     if (!stu) note("pickleball.students", T("匹克球學員數", "Pickleball student count"));
-    if (!sig) note("pickleball.signups", T("匹克球每月報名筆數", "Pickleball monthly sign-ups"));
+    if (!sig) note("pickleball.signups", T("匹克球報名筆數", "Pickleball sign-ups"));
     var pbStats = [];
     if (stu || SHOW) pbStats.push([stu ? esc(stu) : todo("?"), T("系統內學員", "students")]);
     if (sig || SHOW) pbStats.push([sig ? esc(sig) : todo("?"), get("pickleball.signupsLabel") || T("每月報名筆數", "sign-ups a month")]);
     pbStats.push(["3", T("LINE 官方帳號", "LINE official accounts")], ["99", T("11 月課程與球敘場次", "classes and sessions in Nov")], ["102", T("自動化測試檔", "automated test files")]);
-
     var rec = get("pickleball.reconcile");
     if (!rec) note("pickleball.reconcile", T("對帳時間的改善", "Reconciliation time saved"));
     var quote = get("pickleball.testimonial." + lang);
@@ -339,7 +312,6 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
       ]).concat(rec ? [T("成果：", "Result: ") + esc(rec)] : (SHOW ? [T("成果：", "Result: ") + todo(T("對帳時間的改善", "Reconciliation time saved"))] : [])),
       extra: quoteHtml
     };
-
     var users = get("firm.users"), saved = get("firm.saved");
     if (!users) note("firm.users", T("事務所系統使用人數", "Firm system users"));
     if (!saved) note("firm.saved", T("文書流程優化的成效", "Document workflow result"));
@@ -358,9 +330,10 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
         { t: "平台", en: "PLATFORM", items: ["AppSheet 前後端", "內建功能＋GAS 自動化", "多個模組，用空間換取時間"], r: "開發時程短、前後端可同時管理開發，結合 Google 內功能擴充性高" },
         { t: "溝通", en: "COMMUNICATION", items: ["了解痛點", "核對需求", "優化功能"], r: "確認核心痛點，對齊想像並保持彈性" }
       ],
-      stats: (users || SHOW ? [[users ? esc(users) : todo("?"), T("每天使用人數", "daily users")]] : []).concat([["10+", T("年舊資料整併", "years of legacy data")]]),
+      stats: (users ? [[esc(users), T("每天使用人數", "daily users")]] : (SHOW ? [[todo("?"), T("每天使用人數", "daily users")]] : []))
+        .concat(saved ? [[esc(saved), T("優化成效", "result")]] : []).concat([["10+", T("年舊資料整併", "years of legacy data")]]),
       stack: ["AppSheet", "Google Apps Script", "Webhooks", "Google Workspace"],
-      details: (lang === "en" ? [
+      details: lang === "en" ? [
         "Patent annuity notices: clients get a private link, confirm or abandon each case online, and answers write back to the case records.",
         "Billing statements and foreign-agent reconciliation documents generated automatically.",
         "Invoice issuing files produced in batches.",
@@ -372,60 +345,108 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
         "發票開立檔批次產生。",
         "以中介明細表重新設計收款銷帳，避免多個自動化同時寫入造成資料錯亂。",
         "客戶 KYC 表單流程；檔案索引上傳工具，把掃描影像對應到案件。"
-      ]).concat(saved ? [T("成效：", "Result: ") + esc(saved)] : (SHOW ? [T("成效：", "Result: ") + todo(T("文書流程優化的成效", "Document workflow result"))] : []))
+      ]
     };
+    return '<section class="panel"><h2>' + T("專案經歷", "Projects") + '<span class="en">projects</span></h2>' +
+      '<p class="sub">' + T("每個專案都用「痛點 → 做法 → 成果」整理，細節收在「詳細內容」。", "Each project reads as pain points, approach, result. Open Details for more.") + "</p>" +
+      project(firm) + project(pb) + "</section>";
+  }
 
-    html += '<section class="panel"><h2>' + T("專案經歷", "Projects") + '<span class="en">projects</span></h2>' + project(firm) + project(pb) + "</section>";
-
-    /* ---------- LINE demo ---------- */
-    if (window.LineDemo) {
-      html += '<section class="panel"><h2>' + T("LINE 操作示範", "LINE demo") + '<span class="en">interactive</span></h2>' +
-        '<p style="margin:-6px 0 20px;color:var(--muted);max-width:62ch">' + T(
-          "匹克球系統的三個 LINE 官方帳號：學員、場主、教練。可以直接點圖文選單操作，也可以觸發系統的自動通知。",
-          "The three LINE official accounts in the pickleball system: students, venue hosts and coaches. Tap the rich menu, or fire the automatic messages.") +
-        '</p><div id="line-demo"></div></section>';
-    }
-
-    /* ---------- screenshots ---------- */
+  function tabScreens() {
     var shots = (C.screenshots || []).filter(function (s) { return s && s.src; });
-    if (shots.length) {
-      html += '<section class="panel"><h2>' + T("系統畫面", "Screens") + '<span class="en">screens</span></h2><div class="shots">' + shots.map(function (s) {
-        var cap = pick(s.caption);
-        return '<figure' + (s.wide ? ' class="wide"' : "") + '><img src="' + esc(s.src) + '" alt="' + esc(cap) + '" loading="lazy"><figcaption>' + esc(cap) + "</figcaption></figure>";
-      }).join("") + '</div><p class="fine">' + T("示意畫面，資料皆為虛構。", "Illustrative screens; all data is fictional.") + "</p></section>";
-    }
+    return '<section class="panel"><h2>' + T("系統畫面", "Screens") + '<span class="en">screens</span></h2>' +
+      '<p class="sub">' + T("右側列出每個畫面對應的承接項目。示意畫面，資料皆為虛構。", "Each screen lists the services it shows. Illustrative; all data is fictional.") + "</p>" +
+      shots.map(function (s) {
+        var cap = pick(s.caption), d = pick(s.desc);
+        return '<div class="shot' + (s.wide ? "" : " phone") + '"><div class="img"><img src="' + esc(s.src) + '" alt="' + esc(cap) + '" loading="lazy"></div>' +
+          "<div><h3>" + esc(cap) + "</h3>" + (d ? "<p>" + esc(d) + "</p>" : "") + sideCaps(s.caps || []) + "</div></div>";
+      }).join("") + "</section>";
+  }
 
-    /* ---------- capabilities ---------- */
-    var caps = C.capabilities || [];
-    var LBL = { done: T("已做過", "Built"), partial: T("部分做過", "Partly built"), plan: T("規劃中", "Planned"), no: T("尚未做過", "Not yet") };
+  function tabServices() {
+    var caps = C.capabilities || [], L = LBL();
     var count = { done: 0, partial: 0, plan: 0, no: 0 };
     caps.forEach(function (c) { count[c.status] = (count[c.status] || 0) + 1; });
-    function capGrid(g) {
+    function grid(g) {
       var order = { done: 0, partial: 1, plan: 2, no: 3 };
       return '<div class="caps">' + caps.filter(function (c) { return c.group === g; })
         .sort(function (a, b) { return order[a.status] - order[b.status]; })
-        .map(function (c) {
-          var n = pick(c.note);
-          return '<div class="cap ' + esc(c.status) + '"><span class="dot ' + esc(c.status) + '" title="' + LBL[c.status] + '"></span><div><b>' + esc(pick(c.name)) + "</b>" + (n ? "<span>" + esc(n) + "</span>" : "<span>" + LBL[c.status] + "</span>") + "</div></div>";
-        }).join("") + "</div>";
+        .map(function (c) { var n = pick(c.note); return '<div class="cap ' + esc(c.status) + '"><span class="dot ' + esc(c.status) + '"></span><div><b>' + esc(pick(c.name)) + "</b><span>" + esc(n || L[c.status]) + "</span></div></div>"; }).join("") + "</div>";
     }
-    html += '<section class="panel"><h2>' + T("可承接項目", "What I can build") + '<span class="en">services</span></h2>' +
-      '<div class="cap-sum">' + ["done", "partial", "plan", "no"].map(function (k) { return '<span><i class="dot ' + k + '"></i>' + LBL[k] + " " + (count[k] || 0) + "</span>"; }).join("") + "</div>" +
-      '<div class="cap-group"><h4>' + T("整套方案", "Full systems") + "</h4>" + capGrid("package") + "</div>" +
-      '<div class="cap-group"><h4>' + T("單項功能", "Features") + "</h4>" + capGrid("item") + "</div>" +
+    return '<section class="panel"><h2>' + T("可承接項目", "What I can build") + '<span class="en">services</span></h2>' +
+      '<p class="sub">' + T("依市面常見的接案項目逐一對照，照實標出做過與沒做過的。", "Checked against a common freelance menu, marked honestly.") + "</p>" +
+      '<div class="cap-sum">' + ["done", "partial", "plan", "no"].map(function (k) { return '<span><i class="dot ' + k + '"></i>' + L[k] + " " + (count[k] || 0) + "</span>"; }).join("") + "</div>" +
+      '<div class="cap-group"><h4>' + T("整套方案", "Full systems") + "</h4>" + grid("package") + "</div>" +
+      '<div class="cap-group"><h4>' + T("單項功能", "Features") + "</h4>" + grid("item") + "</div>" +
       '<div class="cap-group"><h4>' + T("清單以外也能做", "Also") + '</h4><ul class="extras">' + (C.extras || []).map(function (x) { return "<li>" + esc(pick(x)) + "</li>"; }).join("") + "</ul></div></section>";
+  }
 
-    /* ---------- skills ---------- */
+  function tabDemo() {
+    return '<section class="panel"><h2>' + T("LINE 操作示範", "LINE demo") + '<span class="en">try it</span></h2>' +
+      '<p class="sub">' + T("匹克球系統的三個 LINE 官方帳號。直接點手機下方的圖文選單操作，或在右側觸發系統的自動通知。",
+        "The three LINE official accounts of the pickleball system. Tap the rich menu on the phone, or fire the automatic messages on the right.") +
+      '</p><div id="line-demo"></div></section>';
+  }
+
+  function about(firmName, school) {
+    var blocks = lang === "en" ? [
+      { t: "How I build with AI", lead: "I treat AI as my engineering team: it writes specs, code and tests; I keep the judgement and the sign-off.",
+        items: [
+          ["Write it down before building", "After talking with the owner I turn requirements into specs, data models, permission tables and quotes, as consistent A4 documents the owner can check or even fill in by hand."],
+          ["Start from real data", "Before changing code I read the actual Google Sheets and AppSheet exports. When something breaks I trace the cause in the data and logs instead of guessing."],
+          ["Every release can be checked and undone", "Versioned folders with archives, automated tests on a fixed clock, a one-click deploy that rolls back on failure, and a written deploy list."],
+          ["Measure, then optimize", "Open times and slow requests are logged, and the numbers decide which part to speed up next."],
+          ["I own the rules and the review", "The owner and I decide which steps run on their own and which stop for a person. I check what the AI produces and catch issues such as type errors or a stale file version."]
+        ],
+        caps: ["需求說明書、報價與操作手冊", "自動化測試、一鍵部署與失敗還原", "系統健康檢查與異常通知", "舊資料整理與遷移", "報表"] },
+      { t: "AI tools I made for myself", lead: "I also build small tools so the AI works the way I do.",
+        items: [
+          ["ContextPack", "A long-term context store built on Apps Script and Google Sheets, wrapped as an MCP server so Claude can read and write settings, ideas and prompts across projects."],
+          ["Spirit Beast Chronicle", "A text RPG run through my own MCP server: places, events, a journal and save files are all tools the AI calls."],
+          ["Teaching cards from real screens", "Step-by-step sign-up guides for older members and fee-rule cards, generated from the live system's screens and posted straight to LINE."]
+        ],
+        caps: ["AI 客服", "LINE 機器人", "一頁式網頁"] },
+      { t: "Background", lead: "From the front line to building systems.",
+        items: [
+          ["Front-line first", "Chinese literature graduate. Customer service in Japanese and English, retail, and sales support before joining " + firmName + " in accounting and operations, where I taught myself to build systems by fixing our paperwork."],
+          ["I speak both sides", "Years of cross-team work mean I understand what owners and staff care about, and can turn it into system rules."],
+          ["Domain knowledge", "IP case procedures, Taiwan tax and foreign-exchange reporting, payment reconciliation."],
+          ["Many tracks at once", "Outside work I write fiction, trained in voice acting and run a VTuber channel. I am used to moving several things forward at the same time."]
+        ],
+        caps: ["社內文書自動產生（請款單、通知書、對帳文件）", "收款對帳、分潤與人員費用結算", "電子發票", "企業內部系統"] }
+    ] : [
+      { t: "我怎麼跟 AI 一起做系統", lead: "我把 AI 當成一起工作的工程團隊：規格、程式、測試交給它動手，判斷與驗收留在我手上。",
+        items: [
+          ["先寫清楚再動手", "和業主訪談後，整理成需求說明書、資料模組、權限表與報價單，用統一格式的 A4 文件讓業主確認，甚至直接手寫勾選。"],
+          ["從真實資料找答案", "改程式前先讀 Google Sheets 與 AppSheet 匯出的實際結構；出問題時直接查資料與紀錄找根因，不用猜的。"],
+          ["每次改版都可驗證、可還原", "版本資料夾與封存、固定時鐘的自動化測試、一鍵部署與失敗自動還原，加上逐項的部署清單。"],
+          ["用數據決定下一步", "記錄每次開啟時間與慢請求，量完才決定先優化哪一段。"],
+          ["規則與把關在我", "哪些節點全自動、哪些停下來讓人判斷，由我和業主決定；AI 的產出我逐項核對，抓出型別錯誤、檔案版本不一致這類問題。"]
+        ],
+        caps: ["需求說明書、報價與操作手冊", "自動化測試、一鍵部署與失敗還原", "系統健康檢查與異常通知", "舊資料整理與遷移", "報表"] },
+      { t: "自己做的 AI 工具", lead: "為了讓 AI 照我的方式工作，我也替自己做工具。",
+        items: [
+          ["ContextPack", "用 GAS 和 Google Sheets 做的長期脈絡庫，再包成 MCP，讓 Claude 在不同專案之間讀寫設定、靈感與提示詞。"],
+          ["靈獸見聞錄", "用自己寫的 MCP 跑的文字 RPG：地點、事件、日誌與存讀檔都是 AI 呼叫的工具。"],
+          ["用真實畫面做教學圖卡", "依系統實際畫面產生長輩報名教學、收費規則圖卡，直接貼到 LINE 群組。"]
+        ],
+        caps: ["AI 客服", "LINE 機器人", "一頁式網頁"] },
+      { t: "背景", lead: "從第一線走到做系統。",
+        items: [
+          ["第一線出身", "中文系畢業，做過日英文客服、門市與日文業務助理；進入" + firmName + "負責會計營運後，從整理文書流程開始自學做系統。"],
+          ["兩邊的話都聽得懂", "多年跨部門溝通的經驗，讓我聽得懂業主和現場人員在意的事，再轉成系統規則。"],
+          ["領域知識", "智財案件流程、台灣稅務與外匯申報、收款對帳。"],
+          ["同時推進好幾件事", "工作之外寫小說、受過配音訓練，也經營 VTuber 頻道，習慣多條線一起前進。"]
+        ],
+        caps: ["社內文書自動產生（請款單、通知書、對帳文件）", "收款對帳、分潤與人員費用結算", "電子發票", "企業內部系統"] }
+    ];
+
     var skills = [
       ["Tools", T("No-Code／Low-Code・Vibe coding", "No-code / low-code · vibe coding"), ["Google AppSheet", "Google Apps Script (GAS)", "Make・n8n・Zapier", "API／Webhook", "LINE Messaging API・LIFF", "HTML・CSS・JavaScript", "Claude（MCP）", "Figma・Canva・Notion・Slack"]],
       ["Data", T("資料建模・資料視覺化", "Data modelling · visualization"), ["Google Sheets・GCP", "SQL " + T("基礎", "basics"), "Microsoft 365", "Looker Studio／Power BI"]],
       ["Core", "What, When, How", lang === "en" ? ["Priority", "Efficiency", "Communication", "Pain points", "Better solutions"] : ["排定優先順序", "效率", "溝通", "找出痛點", "更好的解法"]],
       ["Domain", T("領域知識", "Domain knowledge"), lang === "en" ? ["Patent and trademark workflows", "Billing and invoicing", "Taiwan tax and FX reporting", "Booking, scheduling, payouts"] : ["專利與商標案件流程", "請款與發票", "台灣稅務與外匯申報", "預約、排班與費用結算"]]
     ];
-    html += '<section class="panel"><h2>' + T("能力", "Skills") + '<span class="en">skills</span></h2><div class="skills">' +
-      skills.map(function (s) { return '<div class="skill"><div class="hd"><b>' + s[0] + "</b><span>" + s[1] + "</span></div>" + list(s[2], "tree") + "</div>"; }).join("") + "</div></section>";
-
-    /* ---------- experience ---------- */
     var tl = [
       [T("2026.10 – 現在", "Oct 2026 – now"), T("產品工程師（獨立接案）", "Product Engineer (freelance)"), T("遠端", "Remote")],
       [v("firm.start", T("到職年月", "Start date")) + T(" – 現在", " – now"), esc(get("firm.title")), firmName + T("・多數時間遠端", " · mostly remote")]
@@ -436,10 +457,74 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
       tl.push([per || (SHOW ? todo(T("期間", "Period")) : ""), esc(pick(j.title)), esc(pick(j.org))]);
     });
     tl.push([v("education.year", T("畢業年份", "Year")), T("學士", "B.A."), school]);
-    html += '<section class="panel"><h2>' + T("經歷與學歷", "Experience and education") + '<span class="en">experience</span></h2><ul class="timeline">' +
-      tl.map(function (r) { return '<li><div class="when">' + r[0] + '</div><div class="what"><b>' + r[1] + "</b><span>" + r[2] + "</span></div></li>"; }).join("") + "</ul></section>";
+    var langs = (C.languages || []).map(pick).filter(Boolean);
 
-    html += '<footer class="site">' + T("合作洽詢：", "Get in touch: ") + (email ? '<a href="mailto:' + esc(email) + '">' + esc(email) + "</a>" : (SHOW ? todo("Email") : "")) + "</footer>";
+    return '<section class="panel" id="about"><h2>' + T("關於我", "About") + '<span class="en">about</span></h2>' +
+      blocks.map(function (b) {
+        return '<div class="about-block"><div><h3>' + b.t + '</h3><p class="lead">' + b.lead + "</p><ul>" +
+          b.items.map(function (i) { return "<li><div><b>" + i[0] + "</b><span>" + i[1] + "</span></div></li>"; }).join("") + "</ul></div>" + sideCaps(b.caps) + "</div>";
+      }).join("") +
+      '<h3 class="h-sub">' + T("能力", "Skills") + '</h3><div class="skills">' +
+      skills.map(function (s) { return '<div class="skill"><div class="hd"><b>' + s[0] + "</b><span>" + s[1] + "</span></div>" + list(s[2], "tree") + "</div>"; }).join("") + "</div>" +
+      '<h3 class="h-sub">' + T("經歷與學歷", "Experience and education") + '</h3><ul class="timeline">' +
+      tl.map(function (r) { return '<li><div class="when">' + r[0] + '</div><div class="what"><b>' + r[1] + "</b><span>" + r[2] + "</span></div></li>"; }).join("") +
+      '<li><div class="when">' + T("語言", "Languages") + '</div><div class="what"><b>' + langs.map(esc).join("<br>") + "</b></div></li></ul></section>";
+  }
+
+  function render() {
+    missing = [];
+    document.documentElement.lang = lang === "en" ? "en" : "zh-Hant";
+    document.getElementById("btn-zh").setAttribute("aria-pressed", String(lang === "zh"));
+    document.getElementById("btn-en").setAttribute("aria-pressed", String(lang === "en"));
+
+    var name = get("person.name"), nick = get("person.nickname");
+    if (!name) note("person.name", T("姓名", "Name"));
+    document.title = (name || "") + T("｜產品工程師", " | Product Engineer");
+
+    var email = get("person.email"), phone = get("person.phone"), links = [];
+    links.push("<span>" + esc(get("person.location")) + "</span>");
+    if (email) links.push('<a href="mailto:' + esc(email) + '">' + esc(email) + "</a>");
+    else { note("person.email", "Email"); if (SHOW) links.push(todo("Email")); }
+    if (lang === "zh") {
+      if (phone) links.push("<span>" + esc(phone) + "</span>");
+      else { note("person.phone", "電話（可留空）"); if (SHOW) links.push(todo("電話（可留空）")); }
+    }
+    [["person.github", "GitHub"], ["person.portfolio", T("作品集", "Portfolio")], ["person.linkedin", "LinkedIn"]].forEach(function (p) {
+      var u = get(p[0]);
+      if (u) links.push('<a href="' + esc(u) + '">' + p[1] + "</a>");
+      else if (!(lang === "zh" && p[0] === "person.linkedin")) { note(p[0], p[1] + T("（可留空）", " (optional)")); if (SHOW) links.push(todo(p[1])); }
+    });
+
+    var langs = (C.languages || []).map(pick).filter(Boolean);
+    var school = v("education.school", T("學校名稱", "University"));
+    var firmName = v("firm.name", T("事務所名稱（可不公開）", "Firm name (optional)"), T("智財法律事務所", "an IP law firm"));
+    var client = v("pickleball.clientName", T("客戶名稱（需業主同意）", "Client name (needs consent)"), T("匹克球教學與球敘新創", "a pickleball coaching startup"));
+    var years = get("person.years");
+
+    var html = BROKEN ? '<div class="err">' + T("config.js 載入失敗，可能有打錯的地方（例如少了逗號或引號）。網站暫時用預設內容顯示。", "config.js failed to load, probably a typo such as a missing comma or quote. Showing defaults.") + "</div>" : "";
+
+    html += '<section class="hero"><div>' +
+      "<h1>" + (name ? esc(name) : (SHOW ? todo(T("姓名", "Your name")) : "")) + (nick && lang === "zh" ? "<small>（" + esc(nick) + "）</small>" : "") + "</h1>" +
+      '<p class="role">' + T("產品工程師｜營運系統與流程自動化", "Product Engineer | Operations Systems &amp; Workflow Automation") + "</p>" +
+      '<p class="tag">「' + esc(get("person.tagline")) + "」</p>" +
+      '<p class="intro">' + T("從需求訪談、資料模型、開發到上線維運，一個人負責整套營運系統。下面可以直接操作我做的 LINE 系統。",
+        "I build operations systems end to end: scoping with the owner, data model, build, launch and support. Try one of them below.") + "</p>" +
+      '<div class="contact">' + links.join("") + "</div></div>" +
+      '<dl class="facts">' +
+        "<div><dt>" + T("經驗", "Experience") + "</dt><dd>" + (years ? T(esc(years) + " 年工作經驗，多數時間遠端", esc(years) + " years of work, mostly remote") : "") + "</dd></div>" +
+        "<div><dt>" + T("現職", "Now") + "</dt><dd>" + firmName + T("・", ", ") + esc(get("firm.title")) + "<br>" + T("獨立接案・產品工程師", "Freelance product engineer") + "</dd></div>" +
+        "<div><dt>" + T("學歷", "Education") + "</dt><dd>" + school + "</dd></div>" +
+        "<div><dt>" + T("語言", "Languages") + "</dt><dd>" + langs.map(esc).join("<br>") + "</dd></div>" +
+      "</dl></section>";
+
+    var labels = { demo: T("操作示範", "Live demo"), projects: T("專案經歷", "Projects"), screens: T("系統畫面", "Screens"), services: T("可承接項目", "Services") };
+    html += '<nav class="tabs" role="tablist" aria-label="' + T("內容分頁", "Sections") + '">' + TABS.map(function (k) {
+      return '<a href="#' + k + '" role="tab" aria-selected="' + (tab === k) + '">' + labels[k] + "</a>";
+    }).join("") + '<a href="#about" role="tab" aria-selected="false" data-jump="1">' + T("關於我", "About") + " ↓</a></nav>";
+
+    html += tab === "projects" ? tabProjects(firmName, client) : tab === "screens" ? tabScreens() : tab === "services" ? tabServices() : tabDemo();
+    html += about(firmName, school);
+    html += '<footer class="site">' + T("合作洽詢：", "Get in touch: ") + (email ? '<a href="mailto:' + esc(email) + '">' + esc(email) + "</a>" : (SHOW ? todo("Email") : "")) + (phone && lang === "zh" ? "　" + esc(phone) : "") + "</footer>";
 
     if (SHOW && missing.length) {
       html = '<div class="todo-panel"><strong>' + T("待填清單（共 " + missing.length + " 項）：在 config.js 填好後，把 showMissing 改成 false 就會隱藏這一區", missing.length + " fields left in config.js. Set showMissing to false to hide this panel.") + "</strong><ol>" +
@@ -450,19 +535,33 @@ mark.todo { background: var(--sun); color: var(--sun-ink); border-radius: 3px; p
     if (ld && window.LineDemo) window.LineDemo.mount(ld, lang);
   }
 
+  function readHash() {
+    var h = location.hash.slice(1);
+    if (TABS.indexOf(h) >= 0) { tab = h; return true; }
+    return false;
+  }
   function setLang(l) {
     lang = l === "en" ? "en" : "zh";
     try { localStorage.setItem("site-lang", lang); } catch (e) {}
-    try { history.replaceState(null, "", "#" + lang); } catch (e) {}
     render();
   }
   document.getElementById("btn-zh").addEventListener("click", function () { setLang("zh"); });
   document.getElementById("btn-en").addEventListener("click", function () { setLang("en"); });
-  window.addEventListener("hashchange", function () { var h = location.hash.slice(1); if (h === "zh" || h === "en") { lang = h; render(); } });
+  document.getElementById("app").addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest(".tabs a");
+    if (!a) return;
+    e.preventDefault();
+    if (a.dataset.jump) { var ab = document.getElementById("about"); if (ab) ab.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+    var k = a.getAttribute("href").slice(1);
+    try { history.replaceState(null, "", "#" + k); } catch (err) {}
+    tab = k; render();
+    var nav = document.querySelector(".tabs"); if (nav && nav.getBoundingClientRect().top < 0) nav.scrollIntoView({ block: "start" });
+  });
+  window.addEventListener("hashchange", function () { if (readHash()) render(); });
 
-  var start = location.hash.slice(1);
-  if (start !== "zh" && start !== "en") { try { start = localStorage.getItem("site-lang"); } catch (e) { start = null; } }
-  lang = start === "en" || start === "zh" ? start : (C.defaultLang === "en" ? "en" : "zh");
+  readHash();
+  var saved = null; try { saved = localStorage.getItem("site-lang"); } catch (e) {}
+  lang = saved === "en" || saved === "zh" ? saved : (C.defaultLang === "en" ? "en" : "zh");
   render();
 })();
 </script>
